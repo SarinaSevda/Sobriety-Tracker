@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
 from tkcalendar import DateEntry
+from mainwindow import *
 
+# Daten speichern
+user_data = {}
 
 # Hier kommen die Funktionen hin
 
@@ -25,7 +28,6 @@ def submit_addiction():
         addiction_button.pack_forget()
         # Zeigt Widgets der nächsten Abfrage
         ask_goal()
-
     else:
         messagebox.showwarning("Warnung", "Bitte wähle eine Sucht aus.")
 
@@ -79,25 +81,30 @@ def ask_sobriety_duration():
     sobriety_minute_dropdown.pack()
     sobriety_button.pack()
 
-
-def submit_final_welcome():
-    messagebox.showinfo("Erfolgreich", f"Sucht: {user_data['addiction']}")
-    messagebox.showinfo("Erfolgreich", f"Ziel: {user_data['goal']}")
-    messagebox.showinfo("Erfolgreich", f"Nüchtern seit: {user_data['sobriety_date'] }")
-    root.quit()
-
 def ask_final_welcome():
     final_welcome_label.pack()
     final_welcome_text.pack()
     final_welcome_button.pack()
 
+# Das fliegt hier wahrscheinlich noch raus
+#def submit_final_welcome():
+#    messagebox.showinfo("Erfolgreich", f"Sucht: {user_data['addiction']}")
+#    messagebox.showinfo("Erfolgreich", f"Ziel: {user_data['goal']}")
+#    messagebox.showinfo("Erfolgreich", f"Nüchtern seit: {user_data['sobriety_date']} um {user_data['sobriety_time']}")
+#    root.destroy()
 
-# Daten speichern
-user_data = {}
+
+
+def open_main_window():
+    """Öffnet das Hauptfenster der Anwendung."""
+    main_window()
+
+
+
 
 # Hier die GUI
 root = tk.Tk()
-root.title('Sobriety Tracker')
+root.title('Sobriety Tracker window 1')
 root.geometry('500x500')
 root.configure(bg="white")
 root.resizable(False, False)
@@ -145,8 +152,7 @@ sobriety_button = tk.Button(root, text="Weiter", command=submit_sobriety_duratio
 # Fünfte "Abfrage", eher das finale Welcome Window:
 final_welcome_label = tk.Label(root, text="Willkommen auf deiner Sobriety-Reise", font=("Helvetica", 12, "bold"))
 final_welcome_text = tk.Label(root, text="Im nächsten Schritt zeigen wir dir deinen täglichen Tracker, in dem du deine nüchternen tage verfolgen und dokumentieren kannst und in dem wir dir tägliche Hilfestellungen zur Verfügung stellen.")
-final_welcome_button = tk.Button(root, text="Weiter", command=submit_final_welcome)
-
+final_welcome_button = tk.Button(root, text="Weiter", command=open_main_window)
 
 
 
