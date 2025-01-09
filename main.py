@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkcalendar import DateEntry
 
 
 # Hier kommen die Funktionen hin
@@ -42,7 +43,7 @@ def submit_goal():
         goal_dropdown.pack_forget()
         goal_button.pack_forget()
         # Zeigt Widgets der nächsten Abfrage
-        ask_final_welcome()
+        ask_sobriety_duration()
 
     else:
         messagebox.showwarning("Warnung"), "Bitte wähle ein Ziel aus."
@@ -54,9 +55,35 @@ def ask_goal():
     goal_dropdown.pack()
     goal_button.pack()
 
+def submit_sobriety_duration():
+    user_data["sobriety_date"] = sobriety_date.get()
+    user_data["sobriety_time"] = f"{sobriety_hour.get()}:{sobriety_minute.get()}"
+    if user_data["sobriety_date"] and user_data["sobriety_time"]:
+        # Verstecke Widgets der Nüchternheitsdauer-Abfrage
+        sobriety_label.pack_forget()
+        sobriety_date.pack_forget()
+        sobriety_time_label.pack_forget()
+        sobriety_hour_dropdown.pack_forget()
+        sobriety_minute_dropdown.pack_forget()
+        sobriety_button.pack_forget()
+        # Zeige das finale Welcome
+        ask_final_welcome()
+    else:
+        messagebox.showwarning("Warnung", "Bitte gib ein Datum und eine Zeit an.")
+
+def ask_sobriety_duration():
+    sobriety_label.pack()
+    sobriety_date.pack()
+    sobriety_time_label.pack()
+    sobriety_hour_dropdown.pack()
+    sobriety_minute_dropdown.pack()
+    sobriety_button.pack()
+
+
 def submit_final_welcome():
     messagebox.showinfo("Erfolgreich", f"Sucht: {user_data['addiction']}")
     messagebox.showinfo("Erfolgreich", f"Ziel: {user_data['goal']}")
+    messagebox.showinfo("Erfolgreich", f"Nüchtern seit: {user_data['sobriety_date'] }")
     root.quit()
 
 def ask_final_welcome():
@@ -101,9 +128,21 @@ goal_label = tk.Label(root, text="Was möchtest du erreichen?")
 goal_var = tk.StringVar(value="Bitte auswählen")
 goal_options = ["Weiger Alkohol trinken", "Gesunde Gewohnheiten aufbauen", "Rauchen aufgeben", "Nüchtern bleiben", "Bildschirmzeit reduzieren"]
 goal_dropdown = tk.OptionMenu(root, goal_var, *goal_options)
-goal_button = tk.Button(root, text="Abschließen", command=submit_goal)
+goal_button = tk.Button(root, text="Weiter", command=submit_goal)
 
-# Vierte "Abfrage", eher das finale Welcome Window:
+#Vierte Abfrage
+sobriety_label = tk.Label(root, text="Seit wann bist du nüchtern?")
+sobriety_date = DateEntry(root, width=12, background='darkblue', foreground='white', borderwidth=2)
+
+sobriety_time_label = tk.Label(root, text="Um welche Uhrzeit?")
+sobriety_hour = tk.StringVar(value="00")
+sobriety_hour_dropdown = tk.OptionMenu(root, sobriety_hour, *[f"{i:02}" for i in range(24)])  # Stunden 00-23
+sobriety_minute = tk.StringVar(value="00")
+sobriety_minute_dropdown = tk.OptionMenu(root, sobriety_minute, *[f"{i:02}" for i in range(60)])  # Minuten 00-59
+sobriety_button = tk.Button(root, text="Weiter", command=submit_sobriety_duration)
+
+
+# Fünfte "Abfrage", eher das finale Welcome Window:
 final_welcome_label = tk.Label(root, text="Willkommen auf deiner Sobriety-Reise", font=("Helvetica", 12, "bold"))
 final_welcome_text = tk.Label(root, text="Im nächsten Schritt zeigen wir dir deinen täglichen Tracker, in dem du deine nüchternen tage verfolgen und dokumentieren kannst und in dem wir dir tägliche Hilfestellungen zur Verfügung stellen.")
 final_welcome_button = tk.Button(root, text="Weiter", command=submit_final_welcome)
