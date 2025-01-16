@@ -58,17 +58,19 @@ def ask_goal():
     goal_button.pack()
 
 def submit_sobriety_duration():
-    user_data["sobriety_date"] = sobriety_date.get()
+    raw_date = sobriety_date.get()
+    user_data["sobriety_date"] = raw_date
+
     user_data["sobriety_time"] = f"{sobriety_hour.get()}:{sobriety_minute.get()}"
+
     if user_data["sobriety_date"] and user_data["sobriety_time"]:
-        # Verstecke Widgets der Nüchternheitsdauer-Abfrage
         sobriety_label.pack_forget()
         sobriety_date.pack_forget()
         sobriety_time_label.pack_forget()
         sobriety_hour_dropdown.pack_forget()
         sobriety_minute_dropdown.pack_forget()
         sobriety_button.pack_forget()
-        # Zeige das finale Welcome
+
         ask_final_welcome()
     else:
         messagebox.showwarning("Warnung", "Bitte gib ein Datum und eine Zeit an.")
@@ -97,7 +99,7 @@ def ask_final_welcome():
 
 def open_main_window():
     """Öffnet das Hauptfenster der Anwendung."""
-    main_window()
+    main_window(user_data)
 
 
 
