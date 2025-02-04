@@ -6,6 +6,8 @@ def main_window(user_data):
     window2 = tk.Tk()
     window2.title('Sobriety Tracker')
     window2.geometry('600x600')
+    window2.configure(bg='white')
+    window2.resizable(False, False)
 
     label = tk.Label(window2, text="Willkommen im Sobriety Tracker!", font=("Helvetica", 16))
     label.pack(pady=20)
