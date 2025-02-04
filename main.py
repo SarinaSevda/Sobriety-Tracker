@@ -88,17 +88,11 @@ def ask_final_welcome():
     final_welcome_text.pack()
     final_welcome_button.pack()
 
-# Das fliegt hier wahrscheinlich noch raus
-#def submit_final_welcome():
-#    messagebox.showinfo("Erfolgreich", f"Sucht: {user_data['addiction']}")
-#    messagebox.showinfo("Erfolgreich", f"Ziel: {user_data['goal']}")
-#    messagebox.showinfo("Erfolgreich", f"Nüchtern seit: {user_data['sobriety_date']} um {user_data['sobriety_time']}")
-#    root.destroy()
-
 
 
 def open_main_window():
     """Öffnet das Hauptfenster der Anwendung."""
+    root.destroy()
     main_window(user_data)
 
 
