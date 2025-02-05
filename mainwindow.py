@@ -59,7 +59,7 @@ def main_window(user_data):
     canvas = tk.Canvas(window2, width=400, height=400, bg="white", highlightthickness=0)
     canvas.pack()
 
-    canvas.create_oval(50, 50, 350, 350, outline="black", width=3)
+    canvas.create_oval(50, 50, 350, 350, outline="grey", width=3)
 
     rect_positions = [(120, 180), (180, 180), (240, 180), (300, 180)]
     rects = []
