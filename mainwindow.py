@@ -61,25 +61,25 @@ def main_window(user_data):
 
     canvas.create_oval(50, 50, 350, 350, outline="grey", width=3)
 
-    rect_positions = [(120, 180), (180, 180), (240, 180), (300, 180)]
+    rect_positions = [(90, 170), (150, 170), (210, 170), (270, 170)]
     rects = []
     for x, y in rect_positions:
-        rects.append(canvas.create_rectangle(x, y, x+50, y+50, outline="black", width=2, fill="white"))
+        rects.append(canvas.create_rectangle(x, y, x+50, y+50, outline="lavender", width=2, fill="white"))
 
     time_texts = [
-        canvas.create_text(145, 205, text="00", font=("Helvetica", 14, "bold")),
-        canvas.create_text(205, 205, text="00", font=("Helvetica", 14, "bold")),
-        canvas.create_text(265, 205, text="00", font=("Helvetica", 14, "bold")),
-        canvas.create_text(325, 205, text="00", font=("Helvetica", 14, "bold"))
+        canvas.create_text(115, 195, text="00", font=("Helvetica", 14, "bold")),
+        canvas.create_text(175, 195, text="00", font=("Helvetica", 14, "bold")),
+        canvas.create_text(235, 195, text="00", font=("Helvetica", 14, "bold")),
+        canvas.create_text(295, 195, text="00", font=("Helvetica", 14, "bold"))
     ]
     labels = ["Tage", "Stunden", "Minuten", "Sekunden"]
     for i, label_text in enumerate(labels):
-        canvas.create_text(145 + (i * 60), 230, text=label_text, font=("Helvetica", 10))
+        canvas.create_text(115 + (i * 60), 245, text=label_text, font=("Helvetica", 10))
 
     for i in range(3):
-        canvas.create_text(175 + (i * 60), 205, text=":", font=("Helvetica", 14, "bold"))
+        canvas.create_text(145 + (i * 60), 195, text=":", font=("Helvetica", 14, "bold"))
 
-    progress_arc = canvas.create_arc(50, 50, 350, 350, start=90, extent=0, outline="blue", width=5, style="arc")
+    progress_arc = canvas.create_arc(50, 50, 350, 350, start=90, extent=0, outline="SkyBlue1", width=5, style="arc")
 
 
     help_button = tk.Button(window2, text='Hilfe', command=open_help)
