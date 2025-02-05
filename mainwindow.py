@@ -51,7 +51,7 @@ def main_window(user_data):
     window2.resizable(False, False)
 
     settings_button = tk.Button(window2, text='Settings', command=open_settings)
-    settings_button.pack()
+    settings_button.place(x=20, y=20)
 
     label = tk.Label(window2, text=f"Willkommen beim Sobriety Tracker, {user_data['name']}!", font=("Helvetica", 16))
     label.pack(pady=20)
@@ -83,14 +83,16 @@ def main_window(user_data):
 
 
     help_button = tk.Button(window2, text='Hilfe', command=open_help)
-    help_button.pack()
+    help_button.place(x=20, y=550)
 
     challenge_button = tk.Button(window2, text="Challenges", command=open_challenge)
-    challenge_button.pack()
+    challenge_button.place(x=250, y=550)
 
     goals_button = tk.Button(window2, text="Ziele", command=open_goals)
-    goals_button.pack()
+    goals_button.place(x=500, y=550)
 
     update_timer()
 
     window2.mainloop()
+
+
