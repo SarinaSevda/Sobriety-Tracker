@@ -22,9 +22,21 @@ def main_window(user_data):
         goal_window.geometry("400x400")
         goal_window.configure(bg="white")
 
+        if "notes" not in user_data:
+            user_data["notes"] = []
+
         def safe_note():
-            user_data["free_text"] = free_text_entry.get()
-            note_label.config(text=f"{user_data['free_text']}")
+            """Speichert eine neue Notiz mit Datum und aktualisiert die Anzeige."""
+            note_text = free_text_entry.get().strip()
+            if note_text:  # Falls das Feld nicht leer ist
+                today = datetime.now().strftime("%d.%m.%Y")  # Heutiges Datum als String
+                user_data["notes"].insert(0, f"{today}: {note_text}")  # Neuen Eintrag oben einfügen
+                free_text_entry.delete(0, tk.END)  # Löscht das Eingabefeld nach dem Speichern
+                update_notes_display()  # Aktualisiert die Anzeige
+
+        def update_notes_display():
+            """Aktualisiert die Anzeige der gespeicherten Notizen."""
+            note_label.config(text="\n".join(user_data["notes"]))  # Notizen untereinander anzeigen
 
         goal_label = tk.Label(goal_window, text=f"Dein Ziel: {user_data['goal']}!", font=("Helvetica", 16), bg="white")
         goal_label.pack()
@@ -32,10 +44,12 @@ def main_window(user_data):
         free_text_label.pack()
         free_text_entry = tk.Entry(goal_window, width=70, font=("Helvetica", 14), bg="white")
         free_text_entry.pack(pady=10)
-        free_text_button = tk.Button(goal_window, text="Speichern", command=safe_note)
-        free_text_button.pack(side=tk.RIGHT, padx=5, pady=5)
-        note_label = tk.Label(goal_window, text="", font=("Helvetica", 12), bg="white")
-        note_label.pack()
+        free_text_button = tk.Button(goal_window, text="Speichern", bg="white", command=safe_note)
+        free_text_button.place(x=300, y=90)
+        note_label = tk.Label(goal_window, text="", font=("Helvetica", 12), bg="white", justify="left", anchor="w")
+        note_label.place(x=20, y=110)
+
+        update_notes_display()
 
     def update_timer():
         """Berechnet die Differenz zwischen dem Nüchternheitsdatum und jetzt und aktualisiert die Anzeige."""
