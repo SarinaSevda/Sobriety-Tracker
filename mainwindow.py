@@ -20,12 +20,22 @@ def main_window(user_data):
         goal_window = tk.Toplevel()
         goal_window.title("Ziele")
         goal_window.geometry("400x400")
+        goal_window.configure(bg="white")
+
+        def safe_note():
+            user_data["free_text"] = free_text_entry.get()
+            note_label.config(text=f"{user_data['free_text']}")
+
         goal_label = tk.Label(goal_window, text=f"Dein Ziel: {user_data['goal']}!", font=("Helvetica", 16), bg="white")
         goal_label.pack()
         free_text_label = tk.Label(goal_window, text="Hier ist Platz für Notizen und Gedanken.", font=("Helvetica", 14), bg="white")
         free_text_label.pack()
         free_text_entry = tk.Entry(goal_window, width=70, font=("Helvetica", 14), bg="white")
         free_text_entry.pack(pady=10)
+        free_text_button = tk.Button(goal_window, text="Speichern", command=safe_note)
+        free_text_button.pack(side=tk.RIGHT, padx=5, pady=5)
+        note_label = tk.Label(goal_window, text="", font=("Helvetica", 12), bg="white")
+        note_label.pack()
 
     def update_timer():
         """Berechnet die Differenz zwischen dem Nüchternheitsdatum und jetzt und aktualisiert die Anzeige."""
