@@ -26,7 +26,11 @@ def ask_addiction():
     welcome_label.pack(pady=50)
     addiction_label.pack()
     addiction_dropdown.pack(pady=10)
+    add_addiction_button.pack()
     addiction_button.pack()
+
+#def ask_another_addiction():
+
 
 def submit_addiction():
     user_data["addiction"] = addiction_var.get()
@@ -119,10 +123,11 @@ name_button.pack()
 
 # Zweite Abfrage: Sucht (initial unsichtbar)
 welcome_label = tk.Label(root, text="", font=("Helvetica", 20, "bold"))
-addiction_label = tk.Label(root, text="Wähle deine Sucht aus:", font=("Helvetica", 13), bg="white")
+addiction_label = tk.Label(root, text="Wähle deine Süchte aus:", font=("Helvetica", 13), bg="white")
 addiction_var = tk.StringVar(value="Bitte auswählen")  # Standardwert für das Dropdown
 addiction_options = ["Bitte auswählen", "Alkoholsucht", "Nikotinsucht", "Drogensucht", "Internetsucht", "Tablettensucht", "Spielsucht", "Kaufsucht", "Tierische Produkte", "Koffeinsucht", "Andere"]
 addiction_dropdown = tk.OptionMenu(root, addiction_var, *addiction_options)
+add_addiction_button = tk.Button(root, text="+")
 addiction_button = tk.Button(root, text="Weiter", command=submit_addiction)
 
 
