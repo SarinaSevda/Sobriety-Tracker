@@ -6,6 +6,9 @@ from mainwindow import *
 
 # Daten speichern
 user_data = {}
+# Liste für zusätzliche Süchte
+additional_addictions = []
+
 
 # Hier kommen die Funktionen hin
 
@@ -25,23 +28,54 @@ def ask_addiction():
     welcome_label.config(text=f"Willkommen, {user_data['name']}!", bg="white")
     welcome_label.pack(pady=50)
     addiction_label.pack()
-    addiction_dropdown.pack(pady=10)
-    add_addiction_button.pack()
-    addiction_button.pack()
 
-#def ask_another_addiction():
+    global addiction_frame
+    addiction_frame = tk.Frame(root, bg="white")
+    addiction_frame.pack(pady=10)
+
+    # Erstes Dropdown + Plus-Button in einer Zeile
+    first_row = tk.Frame(addiction_frame, bg="white")
+    first_row.pack(pady=5)
+
+    global addiction_dropdown
+    addiction_dropdown = tk.OptionMenu(first_row, addiction_var, *addiction_options)
+    addiction_dropdown.pack(side="left", padx=5)
+
+    global add_addiction_button
+    add_addiction_button = tk.Button(first_row, text="+", command=open_new_addiction_choice)
+    add_addiction_button.pack(side="left", padx=5)
+
+    addiction_button.pack()
 
 
 def submit_addiction():
-    user_data["addiction"] = addiction_var.get()
-    if user_data["addiction"] != "Bitte auswählen":
+    addictions = []
+    # Hauptsucht hinzufügen
+    if addiction_var.get() != "Bitte auswählen":
+        addictions.append(addiction_var.get())
+
+    # Zusätzliche Süchte hinzufügen
+    for var, dropdown in additional_addictions:
+        if var.get() != "Bitte auswählen":
+            addictions.append(var.get())
+
+    if addictions:
+        user_data["addictions"] = addictions  # Speichere eine Liste aller Süchte
         addiction_label.pack_forget()
         addiction_dropdown.pack_forget()
+        add_addiction_button.pack_forget()
+        for _, dropdown in additional_addictions:
+            dropdown.pack_forget()
         addiction_button.pack_forget()
-        # Zeigt Widgets der nächsten Abfrage
         ask_goal()
     else:
-        messagebox.showwarning("Warnung", "Bitte wähle eine Sucht aus.")
+        messagebox.showwarning("Warnung", "Bitte wähle mindestens eine Sucht aus.")
+
+def open_new_addiction_choice():
+    new_var = tk.StringVar(value="Bitte auswählen")
+    new_dropdown = tk.OptionMenu(addiction_frame, new_var, *addiction_options)
+    new_dropdown.pack(pady=5)
+    additional_addictions.append((new_var, new_dropdown))
 
 
 def ask_goal():
@@ -126,8 +160,6 @@ welcome_label = tk.Label(root, text="", font=("Helvetica", 20, "bold"))
 addiction_label = tk.Label(root, text="Wähle deine Süchte aus:", font=("Helvetica", 13), bg="white")
 addiction_var = tk.StringVar(value="Bitte auswählen")  # Standardwert für das Dropdown
 addiction_options = ["Bitte auswählen", "Alkoholsucht", "Nikotinsucht", "Drogensucht", "Internetsucht", "Tablettensucht", "Spielsucht", "Kaufsucht", "Tierische Produkte", "Koffeinsucht", "Andere"]
-addiction_dropdown = tk.OptionMenu(root, addiction_var, *addiction_options)
-add_addiction_button = tk.Button(root, text="+")
 addiction_button = tk.Button(root, text="Weiter", command=submit_addiction)
 
 
@@ -162,4 +194,3 @@ final_welcome_button = tk.Button(root, text="Weiter", command=open_main_window)
 
 
 root.mainloop()
-
