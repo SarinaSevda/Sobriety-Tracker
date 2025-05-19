@@ -9,6 +9,11 @@ user_data = {}
 # Liste für zusätzliche Süchte
 additional_addictions = []
 
+# Globale Platzhalter-Initialisierungen für dynamisch erzeugte GUI-Elemente
+addiction_frame = None
+addiction_dropdown = None
+add_addiction_button = None
+pack_forget = None
 
 # Hier kommen die Funktionen hin
 
@@ -25,15 +30,15 @@ def submit_name():
         messagebox.showwarning("Warnung", "Bitte gib deinen Namen ein.")
 
 def ask_addiction():
-    welcome_label.config(text=f"Willkommen, {user_data['name']}!", bg="white")
+    welcome_label.config(text=f"Willkommen, {user_data['name']}! Bitte wähle deine Süchte aus.", bg="white")
     welcome_label.pack(pady=50)
+
     addiction_label.pack()
 
     global addiction_frame
     addiction_frame = tk.Frame(root, bg="white")
     addiction_frame.pack(pady=10)
 
-    # Erstes Dropdown + Plus-Button in einer Zeile
     first_row = tk.Frame(addiction_frame, bg="white")
     first_row.pack(pady=5)
 
@@ -46,6 +51,7 @@ def ask_addiction():
     add_addiction_button.pack(side="left", padx=5)
 
     addiction_button.pack()
+
 
 
 def submit_addiction():
@@ -77,13 +83,14 @@ def open_new_addiction_choice():
     new_dropdown.pack(pady=5)
     additional_addictions.append((new_var, new_dropdown))
 
-
 def ask_goal():
-    welcome_label.config(text=f"Willkommen, {user_data['name']}!")
-    welcome_label.pack()
+    welcome_label.config(text="Super! Was möchtest du erreichen?", bg="white")
+    welcome_label.pack(pady=50)
+
     goal_label.pack()
     goal_dropdown.pack(pady=10)
     goal_button.pack()
+
 
 def submit_goal():
     user_data["goal"] = goal_var.get()
@@ -132,8 +139,10 @@ def ask_final_welcome():
 
 def open_main_window():
     """Öffnet das Hauptfenster der Anwendung."""
-    root.destroy()
+
     main_window(user_data)
+
+
 
 
 
@@ -156,7 +165,7 @@ name_button = tk.Button(root, text="Weiter", command=submit_name)
 name_button.pack()
 
 # Zweite Abfrage: Sucht (initial unsichtbar)
-welcome_label = tk.Label(root, text="", font=("Helvetica", 20, "bold"))
+
 addiction_label = tk.Label(root, text="Wähle deine Süchte aus:", font=("Helvetica", 13), bg="white")
 addiction_var = tk.StringVar(value="Bitte auswählen")  # Standardwert für das Dropdown
 addiction_options = ["Bitte auswählen", "Alkoholsucht", "Nikotinsucht", "Drogensucht", "Internetsucht", "Tablettensucht", "Spielsucht", "Kaufsucht", "Tierische Produkte", "Koffeinsucht", "Andere"]
@@ -164,7 +173,7 @@ addiction_button = tk.Button(root, text="Weiter", command=submit_addiction)
 
 
 #Dritte Abfrage: Ziele
-welcome_label = tk.Label(root, text="", font=("Helvetica", 20, "bold"))
+
 goal_label = tk.Label(root, text="Was möchtest du erreichen?", font=("Helvetica", 13), bg="white")
 goal_var = tk.StringVar(value="Bitte auswählen")
 goal_options = ["Weniger Alkohol trinken", "Gesunde Gewohnheiten etablieren", "Rauchen aufgeben", "Nüchtern bleiben", "Bildschirmzeit reduzieren", "Geld sparen", "Mehr Fokus finden", "Andere"]
