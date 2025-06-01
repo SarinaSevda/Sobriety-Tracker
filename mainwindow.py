@@ -84,6 +84,7 @@ def main_window(user_data):
     style = ttk.Style()
     style.theme_use('alt')
 
+
     settings_button = ttk.Button(window2, text='Settings', command=open_settings)
     settings_button.place(x=20, y=20)
 
