@@ -17,7 +17,7 @@ pack_forget = None
 
 # style
 style = ttk.Style()
-style.configure('TButton', color = 'pink')
+style.theme_use('alt')
 
 
 
