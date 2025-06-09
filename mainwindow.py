@@ -1,6 +1,7 @@
 import tkinter as tk
 from datetime import datetime
 from tkinter import ttk
+import webbrowser
 
 
 def main_window(user_data):
@@ -43,6 +44,15 @@ def main_window(user_data):
 
         websites_label = tk.Label(help_window, text="Weitere Hilfeseiten:", font=("Helvetica", 14))
         websites_label.pack()
+        websites = [
+            ("Der Beauftragte der Bundesregierung für Sucht- und Drogenfragen", "https://www.bundesdrogenbeauftragter.de/service/beratungsangebote/"),
+            ("Deutsches Rotes Kreuz Suchtberatung:", "https://www.drk.de/hilfe-in-deutschland/gesundheit-und-praevention/suchtberatung/"),
+            ("DHS Deutsche Hauptstelle für Suchtfragen e.V.", "https://www.dhs.de/")
+        ]
+
+        for text, url in websites:
+            button = tk.Button(help_window, text=text, command=lambda link=url: webbrowser.open(link))
+            button.pack(pady=5)
 
 
 
