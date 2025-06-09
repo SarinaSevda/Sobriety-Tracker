@@ -13,49 +13,51 @@ def main_window(user_data):
     def open_help():
         help_window = tk.Toplevel()
         help_window.title("Hilfe")
-        help_window.geometry("400x400")
+        help_window.geometry("600x600")
 
-        helph1_label = tk.Label(help_window, text=f"Hier findest du Hilfe in Notsituationen:", font=("Helvetica", 16))
-        helph1_label.pack()
+        content_frame = tk.Frame(help_window)
+        content_frame.pack(fill='both', expand=True, padx=20, pady=20)
 
-        emergency_numbers_label = tk.Label(help_window, text=f"Notrufnummern:", font=("Helvetica", 14))
-        emergency_numbers_label.pack()
-        polizei_label = tk.Label(help_window, text=f"Polizeinotruf: 110", font=("Helvetica", 12))
-        polizei_label.pack()
-        feuerwehr_notruf_label = tk.Label(help_window, text=f"Feuerwehr und Notruf: 112", font=("Helvetica", 12))
-        feuerwehr_notruf_label.pack()
-        bereitschaftsdienst_label = tk.Label(help_window, text=f"Ärztlicher Bereitschaftsdienst: 116 117", font=("Helvetica", 12))
-        bereitschaftsdienst_label.pack()
+        def add_label(master, text, size=12, pady=2, bold=False):
+            font = ("Helvetica", size, "bold") if bold else ("Helvetica", size)
+            label = tk.Label(master, text=text, font=font, anchor='w', justify='left')
+            label.pack(anchor='w', pady=pady, fill='x')
+            return label
 
-        other_numbers_label = tk.Label(help_window, text=f"Seelsorge und Telefonberatung:", font=("Helvetica", 14))
-        other_numbers_label.pack()
-        telefonseelsorge_label = tk.Label(help_window, text=f"TelefonSeelsorge: 116 123 oder 0800 1110111 / 0800 1110222", font=("Helvetica", 12))
-        telefonseelsorge_label.pack()
-        bereitschaftsdienst_label = tk.Label(help_window, text=f"Ärztlicher Bereitschaftsdienst: 116 117", font=("Helvetica", 12))
-        bereitschaftsdienst_label.pack()
-        sucht_hotline_label = tk.Label(help_window, text=f"Sucht & Drogenhotline: 01806 313031", font=("Helvetica", 12))
-        sucht_hotline_label.pack()
-        infotelefon_suchtvorbeugung = tk.Label(help_window, text=f"Infotelefon zur Suchtvorbeugung: 0221 89 20 31", font=("Helvetica", 12))
-        infotelefon_suchtvorbeugung.pack()
-        beratung_rauchentwoehnung = tk.Label(help_window, text=f"Telefonberatung zur Rauchentwöhnung: 0800 8 31 31 31", font=("Helvetica", 12))
-        beratung_rauchentwoehnung.pack()
-        beratung_gluecksspiel = tk.Label(help_window, text=f"Telefonberatung zur Glücksspielsucht: 0800 1 37 27 00", font=("Helvetica", 12))
-        beratung_gluecksspiel.pack()
+        add_label(content_frame, "Hier findest du Hilfe in Notsituationen:", size=16, bold=True, pady=(0, 10))
 
-        websites_label = tk.Label(help_window, text="Weitere Hilfeseiten:", font=("Helvetica", 14))
-        websites_label.pack()
+        add_label(content_frame, "Notrufnummern:", size=14, bold=True, pady=(10, 5))
+        add_label(content_frame, "Polizeinotruf: 110")
+        add_label(content_frame, "Feuerwehr und Notruf: 112")
+        add_label(content_frame, "Ärztlicher Bereitschaftsdienst: 116 117")
+
+        add_label(content_frame, "Seelsorge und Telefonberatung:", size=14, bold=True, pady=(15, 5))
+        add_label(content_frame, "TelefonSeelsorge: 116 123 oder 0800 1110111 / 0800 1110222")
+        add_label(content_frame, "Ärztlicher Bereitschaftsdienst: 116 117")
+        add_label(content_frame, "Sucht & Drogenhotline: 01806 313031")
+        add_label(content_frame, "Infotelefon zur Suchtvorbeugung: 0221 89 20 31")
+        add_label(content_frame, "Telefonberatung zur Rauchentwöhnung: 0800 8 31 31 31")
+        add_label(content_frame, "Telefonberatung zur Glücksspielsucht: 0800 1 37 27 00")
+
+        add_label(content_frame, "Weitere Hilfeseiten:", size=14, bold=True, pady=(15, 5))
+
+        button_frame = tk.Frame(content_frame)
+        button_frame.pack(anchor='w', fill='x')
+
         websites = [
-            ("Der Beauftragte der Bundesregierung für Sucht- und Drogenfragen", "https://www.bundesdrogenbeauftragter.de/service/beratungsangebote/"),
-            ("Deutsches Rotes Kreuz Suchtberatung:", "https://www.drk.de/hilfe-in-deutschland/gesundheit-und-praevention/suchtberatung/"),
+            ("Der Beauftragte der Bundesregierung für Sucht- und Drogenfragen",
+             "https://www.bundesdrogenbeauftragter.de/service/beratungsangebote/"),
+            ("Deutsches Rotes Kreuz Suchtberatung:",
+             "https://www.drk.de/hilfe-in-deutschland/gesundheit-und-praevention/suchtberatung/"),
             ("DHS Deutsche Hauptstelle für Suchtfragen e.V.", "https://www.dhs.de/")
         ]
 
+        max_width = 60
+
         for text, url in websites:
-            button = tk.Button(help_window, text=text, command=lambda link=url: webbrowser.open(link))
-            button.pack(pady=5)
-
-
-
+            btn = tk.Button(button_frame, text=text, anchor='w', width=max_width,
+                            command=lambda link=url: webbrowser.open(link))
+            btn.pack(anchor='w', pady=5)
 
 
     def open_challenge():
