@@ -13,6 +13,7 @@ def main_window(user_data):
         help_window = tk.Toplevel()
         help_window.title("Hilfe")
 
+
     def open_challenge():
         challenge_window = tk.Toplevel()
         challenge_window.title("Challenges")
