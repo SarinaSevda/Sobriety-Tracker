@@ -12,6 +12,10 @@ def main_window(user_data):
     def open_help():
         help_window = tk.Toplevel()
         help_window.title("Hilfe")
+        help_window.geometry("400x400")
+
+        helph1_label = ttk.Label(help_window, text=f"Hier findest du Hilfe in Notsituationen:", font=("Helvetica", 16))
+        helph1_label.pack()
 
 
     def open_challenge():
