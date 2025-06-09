@@ -14,8 +14,38 @@ def main_window(user_data):
         help_window.title("Hilfe")
         help_window.geometry("400x400")
 
-        helph1_label = ttk.Label(help_window, text=f"Hier findest du Hilfe in Notsituationen:", font=("Helvetica", 16))
+        helph1_label = tk.Label(help_window, text=f"Hier findest du Hilfe in Notsituationen:", font=("Helvetica", 16))
         helph1_label.pack()
+
+        emergency_numbers_label = tk.Label(help_window, text=f"Notrufnummern:", font=("Helvetica", 14))
+        emergency_numbers_label.pack()
+        polizei_label = tk.Label(help_window, text=f"Polizeinotruf: 110", font=("Helvetica", 12))
+        polizei_label.pack()
+        feuerwehr_notruf_label = tk.Label(help_window, text=f"Feuerwehr und Notruf: 112", font=("Helvetica", 12))
+        feuerwehr_notruf_label.pack()
+        bereitschaftsdienst_label = tk.Label(help_window, text=f"Ärztlicher Bereitschaftsdienst: 116 117", font=("Helvetica", 12))
+        bereitschaftsdienst_label.pack()
+
+        other_numbers_label = tk.Label(help_window, text=f"Seelsorge und Telefonberatung:", font=("Helvetica", 14))
+        other_numbers_label.pack()
+        telefonseelsorge_label = tk.Label(help_window, text=f"TelefonSeelsorge: 116 123 oder 0800 1110111 / 0800 1110222", font=("Helvetica", 12))
+        telefonseelsorge_label.pack()
+        bereitschaftsdienst_label = tk.Label(help_window, text=f"Ärztlicher Bereitschaftsdienst: 116 117", font=("Helvetica", 12))
+        bereitschaftsdienst_label.pack()
+        sucht_hotline_label = tk.Label(help_window, text=f"Sucht & Drogenhotline: 01806 313031", font=("Helvetica", 12))
+        sucht_hotline_label.pack()
+        infotelefon_suchtvorbeugung = tk.Label(help_window, text=f"Infotelefon zur Suchtvorbeugung: 0221 89 20 31", font=("Helvetica", 12))
+        infotelefon_suchtvorbeugung.pack()
+        beratung_rauchentwoehnung = tk.Label(help_window, text=f"Telefonberatung zur Rauchentwöhnung: 0800 8 31 31 31", font=("Helvetica", 12))
+        beratung_rauchentwoehnung.pack()
+        beratung_gluecksspiel = tk.Label(help_window, text=f"Telefonberatung zur Glücksspielsucht: 0800 1 37 27 00", font=("Helvetica", 12))
+        beratung_gluecksspiel.pack()
+
+        websites_label = tk.Label(help_window, text="Weitere Hilfeseiten:", font=("Helvetica", 14))
+        websites_label.pack()
+
+
+
 
 
     def open_challenge():
