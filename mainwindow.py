@@ -1,5 +1,6 @@
 import tkinter as tk
 from datetime import datetime
+from tkinter import ttk
 
 
 def main_window(user_data):
@@ -20,7 +21,7 @@ def main_window(user_data):
         goal_window = tk.Toplevel()
         goal_window.title("Ziele")
         goal_window.geometry("400x400")
-        goal_window.configure(bg="white")
+        goal_window.configure()
 
         if "notes" not in user_data:
             user_data["notes"] = []
@@ -38,15 +39,15 @@ def main_window(user_data):
             """Aktualisiert die Anzeige der gespeicherten Notizen."""
             note_label.config(text="\n".join(user_data["notes"]))  # Notizen untereinander anzeigen
 
-        goal_label = tk.Label(goal_window, text=f"Dein Ziel: {user_data['goal']}!", font=("Helvetica", 16), bg="white")
+        goal_label = ttk.Label(goal_window, text=f"Dein Ziel: {user_data['goal']}!", font=("Helvetica", 16))
         goal_label.pack()
-        free_text_label = tk.Label(goal_window, text="Hier ist Platz für Notizen und Gedanken.", font=("Helvetica", 14), bg="white")
+        free_text_label = ttk.Label(goal_window, text="Hier ist Platz für Notizen und Gedanken.", font=("Helvetica", 14))
         free_text_label.pack()
-        free_text_entry = tk.Entry(goal_window, width=70, font=("Helvetica", 14), bg="white")
+        free_text_entry = ttk.Entry(goal_window, width=70, font=("Helvetica", 14))
         free_text_entry.pack(pady=10)
-        free_text_button = tk.Button(goal_window, text="Speichern", bg="white", command=safe_note)
+        free_text_button = ttk.Button(goal_window, text="Speichern", command=safe_note)
         free_text_button.place(x=300, y=90)
-        note_label = tk.Label(goal_window, text="", font=("Helvetica", 12), bg="white", justify="left", anchor="w")
+        note_label = ttk.Label(goal_window, text="", font=("Helvetica", 12), justify="left", anchor="w")
         note_label.place(x=20, y=110)
 
         update_notes_display()
@@ -77,16 +78,20 @@ def main_window(user_data):
     window2 = tk.Tk()
     window2.title('Sobriety Tracker')
     window2.geometry('600x600')
-    window2.configure(bg='white')
+    window2.configure()
     window2.resizable(False, False)
+    # style
+    style = ttk.Style()
+    style.theme_use('alt')
 
-    settings_button = tk.Button(window2, text='Settings', command=open_settings)
+
+    settings_button = ttk.Button(window2, text='Settings', command=open_settings)
     settings_button.place(x=20, y=20)
 
-    label = tk.Label(window2, text=f"Willkommen beim Sobriety Tracker, {user_data['name']}!", font=("Helvetica", 16))
+    label = ttk.Label(window2, text=f"Willkommen beim Sobriety Tracker, {user_data['name']}!", font=("Helvetica", 16))
     label.pack(pady=20)
 
-    canvas = tk.Canvas(window2, width=400, height=400, bg="white", highlightthickness=0)
+    canvas = tk.Canvas(window2, width=400, height=400, highlightthickness=0)
     canvas.pack()
 
     canvas.create_oval(50, 50, 350, 350, outline="grey", width=3)
@@ -112,13 +117,13 @@ def main_window(user_data):
     progress_arc = canvas.create_arc(50, 50, 350, 350, start=90, extent=0, outline="SkyBlue1", width=5, style="arc")
 
 
-    help_button = tk.Button(window2, text='Hilfe', command=open_help)
+    help_button = ttk.Button(window2, text='Hilfe', command=open_help)
     help_button.place(x=20, y=550)
 
-    challenge_button = tk.Button(window2, text="Challenges", command=open_challenge)
+    challenge_button = ttk.Button(window2, text="Challenges", command=open_challenge)
     challenge_button.place(x=250, y=550)
 
-    goals_button = tk.Button(window2, text="Ziele", command=open_goals)
+    goals_button = ttk.Button(window2, text="Ziele", command=open_goals)
     goals_button.place(x=500, y=550)
 
     update_timer()
