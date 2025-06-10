@@ -1,3 +1,6 @@
+# idea-Ordner macht Probleme und wird nicht benötigt, daher jetzt in Verbannung
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
