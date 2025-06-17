@@ -15,6 +15,7 @@ def main_window(user_data):
         help_window.title("Hilfe")
         help_window.geometry("600x600")
 
+
         content_frame = tk.Frame(help_window)
         content_frame.pack(fill='both', expand=True, padx=20, pady=20)
 
