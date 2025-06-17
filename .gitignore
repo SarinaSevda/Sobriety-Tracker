@@ -1,6 +1,9 @@
 # idea-Ordner macht Probleme und wird nicht benötigt, daher jetzt in Verbannung
 .idea/
 
+# Verhindert problematische Icon-Dateien mit Sonderzeichen im Namen
+Icon*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
