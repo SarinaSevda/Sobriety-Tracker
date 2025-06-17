@@ -1,6 +1,7 @@
 import tkinter as tk
 from datetime import datetime
 from tkinter import ttk
+import webbrowser
 
 
 def main_window(user_data):
@@ -12,6 +13,52 @@ def main_window(user_data):
     def open_help():
         help_window = tk.Toplevel()
         help_window.title("Hilfe")
+        help_window.geometry("600x600")
+
+        content_frame = tk.Frame(help_window)
+        content_frame.pack(fill='both', expand=True, padx=20, pady=20)
+
+        def add_label(master, text, size=12, pady=2, bold=False):
+            font = ("Helvetica", size, "bold") if bold else ("Helvetica", size)
+            label = tk.Label(master, text=text, font=font, anchor='w', justify='left')
+            label.pack(anchor='w', pady=pady, fill='x')
+            return label
+
+        add_label(content_frame, "Hier findest du Hilfe in Notsituationen:", size=16, bold=True, pady=(0, 10))
+
+        add_label(content_frame, "Notrufnummern:", size=14, bold=True, pady=(10, 5))
+        add_label(content_frame, "Polizeinotruf: 110")
+        add_label(content_frame, "Feuerwehr und Notruf: 112")
+        add_label(content_frame, "Ärztlicher Bereitschaftsdienst: 116 117")
+
+        add_label(content_frame, "Seelsorge und Telefonberatung:", size=14, bold=True, pady=(15, 5))
+        add_label(content_frame, "TelefonSeelsorge: 116 123 oder 0800 1110111 / 0800 1110222")
+        add_label(content_frame, "Ärztlicher Bereitschaftsdienst: 116 117")
+        add_label(content_frame, "Sucht & Drogenhotline: 01806 313031")
+        add_label(content_frame, "Infotelefon zur Suchtvorbeugung: 0221 89 20 31")
+        add_label(content_frame, "Telefonberatung zur Rauchentwöhnung: 0800 8 31 31 31")
+        add_label(content_frame, "Telefonberatung zur Glücksspielsucht: 0800 1 37 27 00")
+
+        add_label(content_frame, "Weitere Hilfeseiten:", size=14, bold=True, pady=(15, 5))
+
+        button_frame = tk.Frame(content_frame)
+        button_frame.pack(anchor='w', fill='x')
+
+        websites = [
+            ("Der Beauftragte der Bundesregierung für Sucht- und Drogenfragen",
+             "https://www.bundesdrogenbeauftragter.de/service/beratungsangebote/"),
+            ("Deutsches Rotes Kreuz Suchtberatung:",
+             "https://www.drk.de/hilfe-in-deutschland/gesundheit-und-praevention/suchtberatung/"),
+            ("DHS Deutsche Hauptstelle für Suchtfragen e.V.", "https://www.dhs.de/")
+        ]
+
+        max_width = 60
+
+        for text, url in websites:
+            btn = tk.Button(button_frame, text=text, anchor='w', width=max_width,
+                            command=lambda link=url: webbrowser.open(link))
+            btn.pack(anchor='w', pady=5)
+
 
     def open_challenge():
         challenge_window = tk.Toplevel()
@@ -129,5 +176,3 @@ def main_window(user_data):
     update_timer()
 
     window2.mainloop()
-
-
