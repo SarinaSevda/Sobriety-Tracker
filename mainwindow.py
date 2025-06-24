@@ -149,6 +149,7 @@ def main_window(user_data):
     for x, y in rect_positions:
         rects.append(canvas.create_rectangle(x, y, x+50, y+50, outline="lavender", width=2, fill="white"))
 
+
     time_texts = [
         canvas.create_text(115, 195, text="00", font=("Helvetica", 14, "bold")),
         canvas.create_text(175, 195, text="00", font=("Helvetica", 14, "bold")),
@@ -175,5 +176,6 @@ def main_window(user_data):
     goals_button.place(x=500, y=550)
 
     update_timer()
+
 
     window2.mainloop()
