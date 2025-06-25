@@ -15,7 +15,6 @@ def main_window(user_data):
         help_window.title("Hilfe")
         help_window.geometry("600x600")
 
-
         content_frame = tk.Frame(help_window)
         content_frame.pack(fill='both', expand=True, padx=20, pady=20)
 
@@ -149,7 +148,6 @@ def main_window(user_data):
     for x, y in rect_positions:
         rects.append(canvas.create_rectangle(x, y, x+50, y+50, outline="lavender", width=2, fill="white"))
 
-
     time_texts = [
         canvas.create_text(115, 195, text="00", font=("Helvetica", 14, "bold")),
         canvas.create_text(175, 195, text="00", font=("Helvetica", 14, "bold")),
@@ -177,5 +175,6 @@ def main_window(user_data):
 
     update_timer()
 
-
     window2.mainloop()
+
+
