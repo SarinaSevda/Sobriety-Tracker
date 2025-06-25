@@ -1,5 +1,7 @@
 import tkinter as tk
 from datetime import datetime
+from tkinter import ttk
+import webbrowser
 
 
 def main_window(user_data):
@@ -11,6 +13,53 @@ def main_window(user_data):
     def open_help():
         help_window = tk.Toplevel()
         help_window.title("Hilfe")
+        help_window.geometry("600x600")
+
+
+        content_frame = tk.Frame(help_window)
+        content_frame.pack(fill='both', expand=True, padx=20, pady=20)
+
+        def add_label(master, text, size=12, pady=2, bold=False):
+            font = ("Helvetica", size, "bold") if bold else ("Helvetica", size)
+            label = tk.Label(master, text=text, font=font, anchor='w', justify='left')
+            label.pack(anchor='w', pady=pady, fill='x')
+            return label
+
+        add_label(content_frame, "Hier findest du Hilfe in Notsituationen:", size=16, bold=True, pady=(0, 10))
+
+        add_label(content_frame, "Notrufnummern:", size=14, bold=True, pady=(10, 5))
+        add_label(content_frame, "Polizeinotruf: 110")
+        add_label(content_frame, "Feuerwehr und Notruf: 112")
+        add_label(content_frame, "Ärztlicher Bereitschaftsdienst: 116 117")
+
+        add_label(content_frame, "Seelsorge und Telefonberatung:", size=14, bold=True, pady=(15, 5))
+        add_label(content_frame, "TelefonSeelsorge: 116 123 oder 0800 1110111 / 0800 1110222")
+        add_label(content_frame, "Ärztlicher Bereitschaftsdienst: 116 117")
+        add_label(content_frame, "Sucht & Drogenhotline: 01806 313031")
+        add_label(content_frame, "Infotelefon zur Suchtvorbeugung: 0221 89 20 31")
+        add_label(content_frame, "Telefonberatung zur Rauchentwöhnung: 0800 8 31 31 31")
+        add_label(content_frame, "Telefonberatung zur Glücksspielsucht: 0800 1 37 27 00")
+
+        add_label(content_frame, "Weitere Hilfeseiten:", size=14, bold=True, pady=(15, 5))
+
+        button_frame = tk.Frame(content_frame)
+        button_frame.pack(anchor='w', fill='x')
+
+        websites = [
+            ("Der Beauftragte der Bundesregierung für Sucht- und Drogenfragen",
+             "https://www.bundesdrogenbeauftragter.de/service/beratungsangebote/"),
+            ("Deutsches Rotes Kreuz Suchtberatung:",
+             "https://www.drk.de/hilfe-in-deutschland/gesundheit-und-praevention/suchtberatung/"),
+            ("DHS Deutsche Hauptstelle für Suchtfragen e.V.", "https://www.dhs.de/")
+        ]
+
+        max_width = 60
+
+        for text, url in websites:
+            btn = tk.Button(button_frame, text=text, anchor='w', width=max_width,
+                            command=lambda link=url: webbrowser.open(link))
+            btn.pack(anchor='w', pady=5)
+
 
     def open_challenge():
         challenge_window = tk.Toplevel()
@@ -20,7 +69,7 @@ def main_window(user_data):
         goal_window = tk.Toplevel()
         goal_window.title("Ziele")
         goal_window.geometry("400x400")
-        goal_window.configure(bg="white")
+        goal_window.configure()
 
         if "notes" not in user_data:
             user_data["notes"] = []
@@ -38,15 +87,15 @@ def main_window(user_data):
             """Aktualisiert die Anzeige der gespeicherten Notizen."""
             note_label.config(text="\n".join(user_data["notes"]))  # Notizen untereinander anzeigen
 
-        goal_label = tk.Label(goal_window, text=f"Dein Ziel: {user_data['goal']}!", font=("Helvetica", 16), bg="white")
+        goal_label = ttk.Label(goal_window, text=f"Dein Ziel: {user_data['goal']}!", font=("Helvetica", 16))
         goal_label.pack()
-        free_text_label = tk.Label(goal_window, text="Hier ist Platz für Notizen und Gedanken.", font=("Helvetica", 14), bg="white")
+        free_text_label = ttk.Label(goal_window, text="Hier ist Platz für Notizen und Gedanken.", font=("Helvetica", 14))
         free_text_label.pack()
-        free_text_entry = tk.Entry(goal_window, width=70, font=("Helvetica", 14), bg="white")
+        free_text_entry = ttk.Entry(goal_window, width=70, font=("Helvetica", 14))
         free_text_entry.pack(pady=10)
-        free_text_button = tk.Button(goal_window, text="Speichern", bg="white", command=safe_note)
+        free_text_button = ttk.Button(goal_window, text="Speichern", command=safe_note)
         free_text_button.place(x=300, y=90)
-        note_label = tk.Label(goal_window, text="", font=("Helvetica", 12), bg="white", justify="left", anchor="w")
+        note_label = ttk.Label(goal_window, text="", font=("Helvetica", 12), justify="left", anchor="w")
         note_label.place(x=20, y=110)
 
         update_notes_display()
@@ -77,16 +126,20 @@ def main_window(user_data):
     window2 = tk.Tk()
     window2.title('Sobriety Tracker')
     window2.geometry('600x600')
-    window2.configure(bg='white')
+    window2.configure()
     window2.resizable(False, False)
+    # style
+    style = ttk.Style()
+    style.theme_use('alt')
 
-    settings_button = tk.Button(window2, text='Settings', command=open_settings)
+
+    settings_button = ttk.Button(window2, text='Settings', command=open_settings)
     settings_button.place(x=20, y=20)
 
-    label = tk.Label(window2, text=f"Willkommen beim Sobriety Tracker, {user_data['name']}!", font=("Helvetica", 16))
+    label = ttk.Label(window2, text=f"Willkommen beim Sobriety Tracker, {user_data['name']}!", font=("Helvetica", 16))
     label.pack(pady=20)
 
-    canvas = tk.Canvas(window2, width=400, height=400, bg="white", highlightthickness=0)
+    canvas = tk.Canvas(window2, width=400, height=400, highlightthickness=0)
     canvas.pack()
 
     canvas.create_oval(50, 50, 350, 350, outline="grey", width=3)
@@ -95,6 +148,7 @@ def main_window(user_data):
     rects = []
     for x, y in rect_positions:
         rects.append(canvas.create_rectangle(x, y, x+50, y+50, outline="lavender", width=2, fill="white"))
+
 
     time_texts = [
         canvas.create_text(115, 195, text="00", font=("Helvetica", 14, "bold")),
@@ -112,17 +166,16 @@ def main_window(user_data):
     progress_arc = canvas.create_arc(50, 50, 350, 350, start=90, extent=0, outline="SkyBlue1", width=5, style="arc")
 
 
-    help_button = tk.Button(window2, text='Hilfe', command=open_help)
+    help_button = ttk.Button(window2, text='Hilfe', command=open_help)
     help_button.place(x=20, y=550)
 
-    challenge_button = tk.Button(window2, text="Challenges", command=open_challenge)
+    challenge_button = ttk.Button(window2, text="Challenges", command=open_challenge)
     challenge_button.place(x=250, y=550)
 
-    goals_button = tk.Button(window2, text="Ziele", command=open_goals)
+    goals_button = ttk.Button(window2, text="Ziele", command=open_goals)
     goals_button.place(x=500, y=550)
 
     update_timer()
 
+
     window2.mainloop()
-
-
