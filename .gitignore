@@ -1,4 +1,13 @@
-# idea-Ordner macht Probleme und wird nicht benötigt, daher jetzt in Verbannung
+
+# nervige macOS-Systemdateien
+.DS_Store
+
+# JetBrains IDE files
+.idea/
+.idea/workspace.xml
+*.iml
+*.iws
+
 
 # Verhindert problematische Icon-Dateien mit Sonderzeichen im Namen
 Icon*
