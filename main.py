@@ -113,6 +113,7 @@ def submit_goal():
         messagebox.showwarning("Warnung"), "Bitte wähle ein Ziel aus."
 
 
+
 def ask_sobriety_duration():
     sobriety_label.pack()
     sobriety_date.pack(pady=10)
