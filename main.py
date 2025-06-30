@@ -2,6 +2,8 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 from mainwindow import *
 from tkinter import ttk
+from db import save_profile
+import datetime #kombiniert Datum und Uhrzeit für Speicherung
 
 
 # Daten speichern
@@ -27,6 +29,7 @@ style.theme_use('alt')
 
 def submit_name():
     user_data["name"] = name_entry.get()
+    name = name_entry.get()
     if user_data["name"]:
         # Verstecke Widgets der ersten Abfrage
         name_label.pack_forget()
@@ -136,6 +139,21 @@ def submit_sobriety_duration():
         sobriety_minute_dropdown.pack_forget()
         sobriety_button.pack_forget()
 
+        try: #kombiniert Zeit und Datum zu Stempel in einheitlichem Format
+            sobriety_datetime = datetime.datetime.strptime(
+                f"{user_data['sobriety_date']} {sobriety_hour.get()}:{sobriety_minute.get()}",
+                "%d.%m.%Y %H:%M"
+            ).isoformat()
+        except ValueError:
+            messagebox.showerror("Fehler", "Bitte gib das Datum im Format TT.MM.JJJJ an.")
+            return
+
+        save_profile( #speichert Nutzerdaten in DB ab
+            user_data["name"],
+            user_data["addictions"],
+            sobriety_datetime
+        )
+
         ask_final_welcome()
     else:
         messagebox.showwarning("Warnung", "Bitte gib ein Datum und eine Zeit an.")
@@ -164,7 +182,7 @@ root.resizable(False, False)
 
 # Erste Abfrage: Wie heißt du?
 welcome_label = ttk.Label(root, text="Willkommen!", font=("Helvetica", 20, "bold"))
-name_label = ttk.Label(root, text="Wie ist dein Name?", font=("Helvetica", 20, "bold"))
+name_label = ttk.Label(root, text="Wie heißt du?", font=("Helvetica", 20, "bold"))
 name_label.pack(pady=50)
 
 name_entry = ttk.Entry(root)

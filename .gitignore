@@ -16,6 +16,7 @@ Icon*
 __pycache__/
 *.py[cod]
 *$py.class
+#verhindert Upload von sensiblen Nutzerdaten (persönl. Datenbank)
 sobriety.db
 
 # C extensions
