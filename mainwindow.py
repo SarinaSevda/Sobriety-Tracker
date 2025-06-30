@@ -2,10 +2,17 @@ import tkinter as tk
 from datetime import datetime
 from tkinter import ttk
 import webbrowser
+from db import load_last_profile  #Datenbank-Ladefunktion importieren
 
 
-def main_window(user_data):
-    """Erstellt das Hauptfenster der Sobriety-Tracker-Anwendung mit Live-Timer."""
+
+def main_window(user_data): #Erstellt das Hauptfenster der Sobriety-Tracker-Anwendung mit Live-Timer.
+    if user_data is None: #lädt vorhandene Userdaten aus der DB
+        user_data = load_last_profile()
+        if user_data is None:
+            print("Kein gespeichertes Profil gefunden.")
+            return
+
     def open_settings():
         settings_window = tk.Toplevel()
         settings_window.title("Einstellungen")
@@ -101,13 +108,13 @@ def main_window(user_data):
 
     def update_timer():
         """Berechnet die Differenz zwischen dem Nüchternheitsdatum und jetzt und aktualisiert die Anzeige."""
-        today = datetime.now()  # Aktuelle Zeit
-        sobriety_date_str = user_data.get('sobriety_date', 'unbekannt')  # Im Format "06.01.25"
-        sobriety_time_str = user_data.get('sobriety_time', '00:00')  # Im Format "HH:MM"
+        try:
+            sobriety_datetime = datetime.fromisoformat(user_data["sobriety_timestamp"])
+        except (ValueError, KeyError):
+            return  # Fehlerhafter Zeitstempel – abbrechen
 
-        sobriety_datetime = datetime.strptime(f"{sobriety_date_str} {sobriety_time_str}", "%d.%m.%y %H:%M")
-
-        delta = today - sobriety_datetime
+        now = datetime.now()
+        delta = now - sobriety_datetime
         days = delta.days
         hours, remainder = divmod(delta.seconds, 3600)
         minutes, seconds = divmod(remainder, 60)

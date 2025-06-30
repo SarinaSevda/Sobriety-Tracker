@@ -4,6 +4,7 @@ from mainwindow import *
 from tkinter import ttk
 from db import save_profile
 import datetime #kombiniert Datum und Uhrzeit für Speicherung
+import tkinter as tk
 
 
 # Daten speichern
@@ -20,7 +21,6 @@ pack_forget = None
 # style
 style = ttk.Style()
 style.theme_use('alt')
-
 
 
 
@@ -113,7 +113,7 @@ def submit_goal():
         ask_sobriety_duration()
 
     else:
-        messagebox.showwarning("Warnung"), "Bitte wähle ein Ziel aus."
+        messagebox.showwarning("Warnung", "Bitte wähle ein Ziel aus.")
 
 
 
@@ -132,6 +132,15 @@ def submit_sobriety_duration():
     user_data["sobriety_time"] = f"{sobriety_hour.get()}:{sobriety_minute.get()}"
 
     if user_data["sobriety_date"] and user_data["sobriety_time"]:
+        try: #kombiniert Zeit und Datum zu Stempel in einheitlichem Format
+            sobriety_datetime = datetime.datetime.strptime(
+                f"{user_data['sobriety_date']} {user_data['sobriety_time']}",
+                "%d.%m.%Y %H:%M"
+             ).isoformat()
+        except ValueError:
+            messagebox.showerror("Fehler", "Bitte gib ein gültiges Datum im Format TT.MM.JJJJ und eine Uhrzeit ein!")
+            return
+
         sobriety_label.pack_forget()
         sobriety_date.pack_forget()
         sobriety_time_label.pack_forget()
@@ -139,14 +148,6 @@ def submit_sobriety_duration():
         sobriety_minute_dropdown.pack_forget()
         sobriety_button.pack_forget()
 
-        try: #kombiniert Zeit und Datum zu Stempel in einheitlichem Format
-            sobriety_datetime = datetime.datetime.strptime(
-                f"{user_data['sobriety_date']} {sobriety_hour.get()}:{sobriety_minute.get()}",
-                "%d.%m.%Y %H:%M"
-            ).isoformat()
-        except ValueError:
-            messagebox.showerror("Fehler", "Bitte gib das Datum im Format TT.MM.JJJJ an.")
-            return
 
         save_profile( #speichert Nutzerdaten in DB ab
             user_data["name"],
@@ -156,7 +157,7 @@ def submit_sobriety_duration():
 
         ask_final_welcome()
     else:
-        messagebox.showwarning("Warnung", "Bitte gib ein Datum und eine Zeit an.")
+        messagebox.showwarning("Warnung", "Bitte gib ein Datum und eine Uhrzeit an.")
 
 
 def ask_final_welcome():
@@ -168,8 +169,6 @@ def open_main_window():
     """Öffnet das Hauptfenster der Anwendung."""
 
     main_window(user_data)
-
-
 
 
 
@@ -231,3 +230,18 @@ final_welcome_button = ttk.Button(root, text="Weiter", command=open_main_window)
 
 
 root.mainloop()
+
+from mainwindow import main_window
+
+if __name__ == "__main__":
+    # Initialisierung von Nutzerdaten (Beispiel)
+    user_data = {
+        "name": "Marc",  # Dieser Name wird im Hauptfenster angezeigt
+        "goal": "100 Tage nüchtern bleiben",  # Zieltext
+        "sobriety_date": "01.01.25",  # Startdatum im Format TT.MM.JJ
+        "sobriety_time": "00:00",  # Startzeit
+        "notes": []  # Leere Notizliste
+    }
+
+    # Starte das Hauptfenster
+    main_window(user_data)
