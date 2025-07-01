@@ -63,6 +63,39 @@ def main_window(user_data):
     def open_challenge():
         challenge_window = tk.Toplevel()
         challenge_window.title("Challenges")
+        challenge_window.geometry("400x400")
+
+        canvas = tk.Canvas(challenge_window, width=400, height=400, highlightthickness=0)
+        canvas.pack()
+
+        today = datetime.now()
+        sobriety_date_str = user_data.get('sobriety_date', 'unbekannt')
+        sobriety_time_str = user_data.get('sobriety_time', '00:00')
+
+        try:
+            sobriety_datetime = datetime.strptime(f"{sobriety_date_str} {sobriety_time_str}", "%d.%m.%y %H:%M")
+            days_sober = (today - sobriety_datetime).days
+        except Exception:
+            days_sober = 0
+
+        milestones = [
+            (10, "🥉 10 Tage – Bronze-Medaille!"),
+            (30, "🥈 1 Monat – Silber-Medaille!"),
+            (100, "🥇 100 Tage – Gold-Medaille!"),
+            (365, "🏅 1 Jahr – Held:innen-Medaille!")
+        ]
+
+        y_pos = 20
+        for day, text in milestones:
+            if days_sober >= day:
+                label = tk.Label(challenge_window, text=text, font=("Helvetica", 12, "bold"), fg="green")
+                label.place(x=20, y=y_pos)
+                canvas.create_text(250, y_pos + 20, text="🎉🎉🎉", font=("Helvetica", 18))
+            else:
+                label = tk.Label(challenge_window, text=f"🔒 Freigeschaltet bei {day} Tagen", font=("Helvetica", 12),
+                                 fg="grey")
+                label.place(x=20, y=y_pos)
+            y_pos += 60
 
     def open_goals():
         goal_window = tk.Toplevel()
