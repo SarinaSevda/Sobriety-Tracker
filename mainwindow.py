@@ -6,9 +6,42 @@ import webbrowser
 
 def main_window(user_data):
     """Erstellt das Hauptfenster der Sobriety-Tracker-Anwendung mit Live-Timer."""
+
+    def apply_theme(dark_mode):
+        if dark_mode:
+            bg = "#2e2e2e"
+            fg = "white"
+            style.configure("TLabel", background=bg, foreground=fg)
+            style.configure("TButton", background=bg, foreground=fg)
+            style.configure("TCheckbutton", background=bg, foreground=fg)
+            window2.configure(background=bg)
+        else:
+            bg = "SystemButtonFace"
+            fg = "black"
+            style.configure("TLabel", background=bg, foreground=fg)
+            style.configure("TButton", background=bg, foreground=fg)
+            style.configure("TCheckbutton", background=bg, foreground=fg)
+            window2.configure(background=bg)
+
     def open_settings():
         settings_window = tk.Toplevel()
         settings_window.title("Einstellungen")
+        settings_window.geometry("300x150")
+
+        is_dark_mode = tk.BooleanVar(value=user_data.get("dark_mode", False))
+
+        def toggle_theme():
+            dark = is_dark_mode.get()
+            user_data["dark_mode"] = dark
+            apply_theme(dark)
+
+        dark_mode_check = ttk.Checkbutton(
+            settings_window,
+            text="Dark Mode aktivieren",
+            variable=is_dark_mode,
+            command=toggle_theme
+        )
+        dark_mode_check.pack(pady=40)
 
     def open_help():
         help_window = tk.Toplevel()
