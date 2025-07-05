@@ -184,6 +184,9 @@ root.geometry('600x600')
 root.configure()
 root.resizable(False, False)
 
+#bisschen mehr Anwenderfreundlichkeit: Returntaste als Alternative zum Klick auf 'weiter'
+root.bind('<Return>', on_enter_press)
+
 # Erste Abfrage: Wie heißt du?
 welcome_label = ttk.Label(root, text="Willkommen!", font=("Helvetica", 20, "bold"))
 name_label = ttk.Label(root, text="Wie ist dein Name?", font=("Helvetica", 20, "bold"))
@@ -191,18 +194,18 @@ name_label.pack(pady=50)
 
 name_entry = ttk.Entry(root)
 name_entry.pack(pady=10)
-
+name_entry.focus()  # Cursor landet hiermit direkt im Eingabefeld
 
 name_button = ttk.Button(root, text="Weiter", command=submit_name)
 name_button.pack()
 
-# Zweite Abfrage: Sucht (initial unsichtbar)
+# Zweite Abfrage: Sucht
 
 addiction_label = ttk.Label(root, text="Wähle deine Süchte aus:", font=("Helvetica", 13))
 addiction_var = tk.StringVar(value="Bitte auswählen")  # Standardwert für das Dropdown
 addiction_options = ["Bitte auswählen", "Alkoholsucht", "Nikotinsucht", "Drogensucht", "Internetsucht", "Tablettensucht", "Spielsucht", "Kaufsucht", "Tierische Produkte", "Koffeinsucht", "Andere"]
 addiction_button = ttk.Button(root, text="Weiter", command=submit_addiction)
-
+back_button_2 = ttk.Button(root, text="Zurück", command=go_back_to_name)
 
 #Dritte Abfrage: Ziele
 
@@ -211,6 +214,7 @@ goal_var = tk.StringVar(value="Bitte auswählen")
 goal_options = ["Weniger Alkohol trinken", "Gesunde Gewohnheiten etablieren", "Rauchen aufgeben", "Nüchtern bleiben", "Bildschirmzeit reduzieren", "Geld sparen", "Mehr Fokus finden", "Andere"]
 goal_dropdown = ttk.OptionMenu(root, goal_var, *goal_options)
 goal_button = ttk.Button(root, text="Weiter", command=submit_goal)
+back_button_3 = ttk.Button(root, text="Zurück", command=go_back_to_addiction)
 
 #Vierte Abfrage
 sobriety_label = ttk.Label(root, text="Seit wann bist du nüchtern?", font=("Helvetica", 13))
@@ -226,6 +230,7 @@ sobriety_minute_dropdown = ttk.OptionMenu(root, sobriety_minute, "00",*[f"{i:02}
 
 
 sobriety_button = ttk.Button(root, text="Weiter", command=submit_sobriety_duration)
+back_button_4 = ttk.Button(root, text="Zurück", command=go_back_to_goal)
 
 
 # Fünfte "Abfrage", eher das finale Welcome Window:
