@@ -14,6 +14,7 @@ addiction_frame = None
 addiction_dropdown = None
 add_addiction_button = None
 pack_forget = None
+current_step = 1 #trackt, welcher Schritt in der Abfrage gerade aktiv ist
 
 # style
 style = ttk.Style()
@@ -26,6 +27,7 @@ style.theme_use('alt')
 
 
 def submit_name():
+    global current_step
     user_data["name"] = name_entry.get()
     if user_data["name"]:
         # Verstecke Widgets der ersten Abfrage
@@ -59,10 +61,12 @@ def ask_addiction():
     add_addiction_button.pack(side="left", padx=5)
 
     addiction_button.pack()
+    back_button_2.pack(pady=5)
 
 
 
 def submit_addiction():
+    global current_step
     addictions = []
     # Hauptsucht hinzufügen
     if addiction_var.get() != "Bitte auswählen":
@@ -74,6 +78,7 @@ def submit_addiction():
             addictions.append(var.get())
 
     if addictions:
+        current_step = 3
         user_data["addictions"] = addictions  # Speichere eine Liste aller Süchte
         addiction_label.pack_forget()
         addiction_dropdown.pack_forget()
@@ -81,6 +86,7 @@ def submit_addiction():
         for _, dropdown in additional_addictions:
             dropdown.pack_forget()
         addiction_button.pack_forget()
+        back_button_2.pack_forget()
         ask_goal()
     else:
         messagebox.showwarning("Warnung", "Bitte wähle mindestens eine Sucht aus.")
@@ -98,17 +104,20 @@ def ask_goal():
     goal_label.pack()
     goal_dropdown.pack(pady=10)
     goal_button.pack()
+    back_button_3.pack(pady=5)
 
 
 def submit_goal():
+    global current_step
     user_data["goal"] = goal_var.get()
     if user_data["goal"] != "Bitte auswählen":
+        current_step = 4
         goal_label.pack_forget()
         goal_dropdown.pack_forget()
         goal_button.pack_forget()
+        back_button_3.pack_forget()
         # Zeigt Widgets der nächsten Abfrage
         ask_sobriety_duration()
-
     else:
         messagebox.showwarning("Warnung"), "Bitte wähle ein Ziel aus."
 
@@ -120,21 +129,35 @@ def ask_sobriety_duration():
     sobriety_time_label.pack(pady=10)
     sobriety_hour_dropdown.pack()
     sobriety_minute_dropdown.pack()
+
+    '''Lade gespeicherte Sobriety-Duration ins Projekt -falls vorhanden '''
+    if "sobriety_date" in user_data:
+        sobriety_date.set_date(user_data["sobriety_date"])
+    if "sobriety_time" in user_data and ":" in user_data["sobriety_time"]:
+        time_parts = user_data["sobriety_time"].split(":")
+        if len(time_parts) == 2:
+            sobriety_hour.set(time_parts[0])
+            sobriety_minute.set(time_parts[1])
+
     sobriety_button.pack()
+    sobriety_button_4.pack(pady=5)
 
 def submit_sobriety_duration():
+    global current_step
     raw_date = sobriety_date.get()
     user_data["sobriety_date"] = raw_date
 
     user_data["sobriety_time"] = f"{sobriety_hour.get()}:{sobriety_minute.get()}"
 
     if user_data["sobriety_date"] and user_data["sobriety_time"]:
+        current_step = 5
         sobriety_label.pack_forget()
         sobriety_date.pack_forget()
         sobriety_time_label.pack_forget()
         sobriety_hour_dropdown.pack_forget()
         sobriety_minute_dropdown.pack_forget()
         sobriety_button.pack_forget()
+        back_button_4.pack_forget()
 
         ask_final_welcome()
     else:
@@ -146,9 +169,8 @@ def ask_final_welcome():
     final_welcome_text.pack()
     final_welcome_button.pack()
 
-def open_main_window():
-    """Öffnet das Hauptfenster der Anwendung."""
-
+def open_main_window(): #Öffnet das Hauptfenster der Anwendung
+    root.destroy() #schließt Eingabeabfrage (root)
     main_window(user_data)
 
 
