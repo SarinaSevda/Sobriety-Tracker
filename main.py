@@ -360,8 +360,8 @@ back_button_4 = ttk.Button(root, text="Zurück", command=go_back_to_goal)
 
 
 # Fünfte "Abfrage", eher das finale Welcome Window:
-final_welcome_label = ttk.Label(root, text="Willkommen auf deiner Sobriety-Reise", font=("Helvetica", 13, "bold"))
-final_welcome_text = ttk.Label(root, text="Im nächsten Schritt zeigen wir dir deinen täglichen Tracker, in dem du deine nüchternen tage verfolgen und dokumentieren kannst und in dem wir dir tägliche Hilfestellungen zur Verfügung stellen.", font=("Helvetica", 13), wraplength=400)
+final_welcome_label = ttk.Label(root, text="** Willkommen auf deiner Sobriety-Reise **", font=("Helvetica", 13, "bold"))
+final_welcome_text = ttk.Label(root, text="Fertig! Sehen wir uns jetzt deinen Tracker an. Hier kannst du deine nüchternen Tage verfolgen und deine Erfolge feiern!", font=("Helvetica", 13), wraplength=400)
 final_welcome_button = ttk.Button(root, text="Weiter", command=open_main_window)
 
 
