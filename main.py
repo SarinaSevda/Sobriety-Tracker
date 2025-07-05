@@ -192,7 +192,7 @@ goal_button = ttk.Button(root, text="Weiter", command=submit_goal)
 
 #Vierte Abfrage
 sobriety_label = ttk.Label(root, text="Seit wann bist du nüchtern?", font=("Helvetica", 13))
-sobriety_date = DateEntry(root, width=12, borderwidth=2)
+sobriety_date = DateEntry(root, width=12, borderwidth=2, date_pattern='dd.mm.yy', locale='de_DE')
 
 sobriety_time_label = ttk.Label(root, text="Um welche Uhrzeit?", font=("Helvetica", 13))
 
