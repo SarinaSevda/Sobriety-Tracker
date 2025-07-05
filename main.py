@@ -86,7 +86,7 @@ def submit_addiction():
         messagebox.showwarning("Warnung", "Bitte wähle mindestens eine Sucht aus.")
 
 def open_new_addiction_choice():
-    new_var = tk.StringVar(value="Bitte auswählen")
+    new_var = tk.StringVar(root, value="Bitte auswählen")
     new_dropdown = ttk.OptionMenu(addiction_frame, new_var, addiction_options[1], *addiction_options)
     new_dropdown.pack(pady=5)
     additional_addictions.append((new_var, new_dropdown))
