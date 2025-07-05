@@ -20,7 +20,18 @@ current_step = 1 #trackt, welcher Schritt in der Abfrage gerade aktiv ist
 style = ttk.Style()
 style.theme_use('alt')
 
-
+# Enter-Taste Handler
+def on_enter_press(event):
+    if current_step == 1:
+        submit_name()
+    elif current_step == 2:
+        submit_addiction()
+    elif current_step == 3:
+        submit_goal()
+    elif current_step == 4:
+        submit_sobriety_duration()
+    elif current_step == 5:
+        open_main_window()
 
 
 # Hier kommen die Funktionen hin
