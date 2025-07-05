@@ -20,7 +20,7 @@ current_step = 1 #trackt, welcher Schritt in der Abfrage gerade aktiv ist
 style = ttk.Style()
 style.theme_use('alt')
 
-# Enter-Taste Handler
+#Enter-Taste Handler
 def on_enter_press(event):
     if current_step == 1:
         submit_name()
@@ -33,9 +33,123 @@ def on_enter_press(event):
     elif current_step == 5:
         open_main_window()
 
+#Zurück-Funktionen
+def go_back_to_name():
+    global current_step, additional_addictions
+    current_step = 1
 
-# Hier kommen die Funktionen hin
+#Versteckt aktuelle Widgets
+    welcome_label.pack_forget()
+    addiction_label.pack_forget()
+    if addiction_frame:
+        addiction_frame.pack_forget()
+    addiction_button.pack_forget()
+    back_button_2.pack_forget()
 
+#Löscht zusätzliche Süchte und setzt Hauptsucht zurück
+    additional_addictions.clear()
+    addiction_var.set("Bitte auswählen")
+
+#Zeigt Name-Widgets
+    name_label.pack(pady=50)
+    name_entry.pack(pady=10)
+    name_entry.delete(0, tk.END)  #Löscht vorherigen Namen
+    name_entry.insert(0, user_data.get("name", ""))  #Lädt gespeicherten Namen
+    name_entry.focus()  #Setzt Fokus auf Eingabefeld
+    name_button.pack()
+
+def go_back_to_addiction(): #zurück-Button 1
+    global current_step, additional_addictions, addiction_frame, addiction_dropdown, add_addiction_button
+    current_step = 2
+
+#Versteckt aktuelle Widgets
+    goal_label.pack_forget()
+    goal_dropdown.pack_forget()
+    goal_button.pack_forget()
+    back_button_3.pack_forget()
+
+#Entfernt alle alten zusätzlichen Dropdowns
+    for _, dropdown in additional_addictions:
+        dropdown.destroy()
+    additional_addictions.clear()
+
+#Zerstört veraltetes addiction_frame komplett
+    if addiction_frame:
+        addiction_frame.destroy()
+
+#Zeigt Sucht-Widgets (Auswahl)
+    welcome_label.config(text=f"Willkommen, {user_data['name']}! Bitte wähle deine Süchte aus.")
+    welcome_label.pack(pady=50)
+    addiction_label.pack()
+
+#Erstellt das addiction_frame neu
+    addiction_frame = ttk.Frame(root)
+    addiction_frame.pack(pady=10)
+
+    first_row = ttk.Frame(addiction_frame)
+    first_row.pack(pady=5)
+
+#Lädt gespeicherte Süchte zurück
+    if "addictions" in user_data and user_data["addictions"]:
+        saved_addictions = user_data["addictions"]
+
+#Suchtauswahl1 im Dropdownmenü
+        if len(saved_addictions) > 0:
+            addiction_var.set(saved_addictions[0])
+        else:
+            addiction_var.set("Bitte auswählen")
+    else:
+        addiction_var.set("Bitte auswählen")
+
+#erstellt Hauptdropdown mit Suchtoptionen
+    addiction_dropdown = ttk.OptionMenu(first_row, addiction_var, addiction_var.get(), *addiction_options)
+    addiction_dropdown.pack(side="left", padx=5)
+
+#..und '+'-Button
+    add_addiction_button = ttk.Button(first_row, text="+", command=open_new_addiction_choice)
+    add_addiction_button.pack(side="left", padx=5)
+
+#extra Dropdown(s) für mehr Süchte
+    if "addictions" in user_data and len(user_data["addictions"]) > 1:
+        for i in range(1, len(user_data["addictions"])):
+            new_var = tk.StringVar(root, value=user_data["addictions"][i])
+            new_dropdown = ttk.OptionMenu(addiction_frame, new_var, new_var.get(), *addiction_options)
+            new_dropdown.pack(pady=5)
+            additional_addictions.append((new_var, new_dropdown))
+
+    addiction_button.pack()
+    back_button_2.pack()
+
+def go_back_to_goal():
+    global current_step
+    current_step = 3
+
+    #Versteckt aktuelle Widgets
+    sobriety_label.pack_forget()
+    sobriety_date.pack_forget()
+    sobriety_time_label.pack_forget()
+    sobriety_hour_dropdown.pack_forget()
+    sobriety_minute_dropdown.pack_forget()
+    sobriety_button.pack_forget()
+    back_button_4.pack_forget()
+
+    #Zeigt Ziel-Widgets
+    welcome_label.config(text="Super! Was möchtest du erreichen?")
+    welcome_label.pack(pady=50)
+    goal_label.pack()
+    goal_dropdown.pack(pady=10)
+
+    #Lädt gespeicherte Zielauswahl zurück
+    if "goal" in user_data:
+        goal_var.set(user_data["goal"])
+
+    goal_button.pack()
+    back_button_3.pack()
+
+
+
+
+#Hauptfunktionen
 
 def submit_name():
     global current_step
@@ -151,7 +265,7 @@ def ask_sobriety_duration():
             sobriety_minute.set(time_parts[1])
 
     sobriety_button.pack()
-    sobriety_button_4.pack(pady=5)
+    back_button_4.pack(pady=5)
 
 def submit_sobriety_duration():
     global current_step
@@ -188,7 +302,8 @@ def open_main_window(): #Öffnet das Hauptfenster der Anwendung
 
 
 
-# Hier die GUI
+#Haupt-GUI
+
 root = tk.Tk()
 root.title('Willkommen beim Sobriety Tracker!')
 root.geometry('600x600')
