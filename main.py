@@ -197,10 +197,10 @@ sobriety_date = DateEntry(root, width=12, borderwidth=2, date_pattern='dd.mm.yy'
 sobriety_time_label = ttk.Label(root, text="Um welche Uhrzeit?", font=("Helvetica", 13))
 
 sobriety_hour = tk.StringVar(value="00")
-sobriety_hour_dropdown = ttk.OptionMenu(root, sobriety_hour, *[f"{i:02}" for i in range(24)])
+sobriety_hour_dropdown = ttk.OptionMenu(root, sobriety_hour, "00", *[f"{i:02}" for i in range(24)])
 
 sobriety_minute = tk.StringVar(value="00")
-sobriety_minute_dropdown = ttk.OptionMenu(root, sobriety_minute, *[f"{i:02}" for i in range(60)])
+sobriety_minute_dropdown = ttk.OptionMenu(root, sobriety_minute, "00",*[f"{i:02}" for i in range(60)])
 
 
 sobriety_button = ttk.Button(root, text="Weiter", command=submit_sobriety_duration)
