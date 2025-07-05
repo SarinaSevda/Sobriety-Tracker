@@ -157,7 +157,7 @@ def open_main_window():
 
 # Hier die GUI
 root = tk.Tk()
-root.title('Sobriety Tracker window 1')
+root.title('Willkommen beim Sobriety Tracker!')
 root.geometry('600x600')
 root.configure()
 root.resizable(False, False)
