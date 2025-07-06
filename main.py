@@ -17,8 +17,8 @@ pack_forget = None
 current_step = 1 #trackt, welcher Schritt in der Abfrage gerade aktiv ist
 
 # style
-style = ttk.Style()
-style.theme_use('alt')
+#style = ttk.Style()
+#style.theme_use('alt')
 
 #Enter-Taste Handler
 def on_enter_press(event):
@@ -309,6 +309,8 @@ root.title('Willkommen beim Sobriety Tracker!')
 root.geometry('600x600')
 root.configure()
 root.resizable(False, False)
+style = ttk.Style()
+style.theme_use('alt')
 
 #bisschen mehr Anwenderfreundlichkeit: Returntaste als Alternative zum Klick auf 'weiter'
 root.bind('<Return>', on_enter_press)
