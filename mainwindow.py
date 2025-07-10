@@ -201,7 +201,7 @@ def main_window(user_data):
     settings_button = ttk.Button(window2, text='Settings', command=open_settings)
     settings_button.place(x=20, y=20)
 
-    label = ttk.Label(window2, text=f"Willkommen beim Sobriety Tracker, {user_data['name']}!", font=("Helvetica", 16))
+    label = ttk.Label(window2, text=f"Hi, {user_data['name']}!", font=("Helvetica", 16))
     label.pack(pady=20)
 
     canvas = tk.Canvas(window2, width=400, height=400, highlightthickness=0)
