@@ -188,6 +188,9 @@ def main_window(user_data):
 
         window2.after(1000, update_timer)
 
+#hier beginnt UI
+
+
     window2 = tk.Tk()
     window2.title('Sobriety Tracker')
     window2.geometry('600x600')
@@ -202,10 +205,10 @@ def main_window(user_data):
     settings_button.place(x=20, y=20)
 
     label = ttk.Label(window2, text=f"Hi, {user_data['name']}!", font=("Helvetica", 16))
-    label.pack(pady=20)
+    label.place(x=300, y=35, anchor="center")
 
     canvas = tk.Canvas(window2, width=400, height=400, highlightthickness=0)
-    canvas.pack()
+    canvas.place(x=100, y=100)
 
     canvas.create_oval(50, 50, 350, 350, outline="grey", width=3)
 
