@@ -314,8 +314,8 @@ root.resizable(False, False)
 root.bind('<Return>', on_enter_press)
 
 # Erste Abfrage: Wie heißt du?
-welcome_label = ttk.Label(root, text="Willkommen!", font=("Helvetica", 20, "bold"))
-name_label = ttk.Label(root, text="Wie ist dein Name?", font=("Helvetica", 20, "bold"))
+welcome_label = ttk.Label(root, text="", font=("Helvetica", 20, "bold"))
+name_label = ttk.Label(root, text="Hi! Wie ist dein Name?", font=("Helvetica", 20, "bold"))
 name_label.pack(pady=50)
 
 name_entry = ttk.Entry(root)
