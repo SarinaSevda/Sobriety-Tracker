@@ -165,7 +165,7 @@ def submit_name():
         messagebox.showwarning("Warnung", "Bitte gib deinen Namen ein.")
 
 def ask_addiction():
-    welcome_label.config(text=f"Willkommen, {user_data['name']}! Bitte wähle deine Süchte aus.")
+    welcome_label.config(text=f"Willkommen, {user_data['name']}! \nBitte wähle deine Süchte aus.", wraplength=500, justify="center")
     welcome_label.pack(pady=50)
 
     addiction_label.pack()
@@ -223,7 +223,7 @@ def open_new_addiction_choice():
     additional_addictions.append((new_var, new_dropdown))
 
 def ask_goal():
-    welcome_label.config(text="Super! Was möchtest du erreichen?")
+    welcome_label.config(text="Super!")
     welcome_label.pack(pady=50)
 
     goal_label.pack()
@@ -360,8 +360,8 @@ back_button_4 = ttk.Button(root, text="Zurück", command=go_back_to_goal)
 
 
 # Fünfte "Abfrage", eher das finale Welcome Window:
-final_welcome_label = ttk.Label(root, text="** Willkommen auf deiner Sobriety-Reise **", font=("Helvetica", 13, "bold"))
-final_welcome_text = ttk.Label(root, text="Fertig! Sehen wir uns jetzt deinen Tracker an. Hier kannst du deine nüchternen Tage verfolgen und deine Erfolge feiern!", font=("Helvetica", 13), wraplength=400)
+final_welcome_label = ttk.Label(root, text="** Willkommen auf deiner Sobriety-Reise **", font=("Helvetica", 13, "bold"), justify="center")
+final_welcome_text = ttk.Label(root, text="Fertig! Sehen wir uns jetzt deinen Tracker an.\nHier kannst du deine nüchternen Tage verfolgen und deine Erfolge feiern!", font=("Helvetica", 13), justify="center", wraplength=500)
 final_welcome_button = ttk.Button(root, text="Weiter", command=open_main_window)
 
 
