@@ -8,7 +8,9 @@ import random
 def main_window(user_data):
     """Erstellt das Hauptfenster der Sobriety-Tracker-Anwendung mit Live-Timer."""
 
+
     def apply_theme(dark_mode):
+        """Einstellung für den Dark-Mode"""
         if dark_mode:
             bg = "#2e2e2e"
             fg = "white"
@@ -24,14 +26,18 @@ def main_window(user_data):
             style.configure("TCheckbutton", background=bg, foreground=fg)
             window2.configure(background=bg)
 
+
     def open_settings():
+        """Öffnet die Einstellungen"""
         settings_window = tk.Toplevel()
         settings_window.title("Einstellungen")
         settings_window.geometry("300x150")
 
         is_dark_mode = tk.BooleanVar(value=user_data.get("dark_mode", False))
 
+
         def toggle_theme():
+            """Eigentliche Funktion für den Dark Mode"""
             dark = is_dark_mode.get()
             user_data["dark_mode"] = dark
             apply_theme(dark)
@@ -45,6 +51,7 @@ def main_window(user_data):
         dark_mode_check.pack(pady=40)
 
     def open_help():
+        """Öffnet das Hilfe-Fenster"""
         help_window = tk.Toplevel()
         help_window.title("Hilfe")
         help_window.geometry("600x600")
@@ -95,6 +102,7 @@ def main_window(user_data):
 
 
     def open_challenge():
+        """Öffnet das Challenge Fenster"""
         challenge_window = tk.Toplevel()
         challenge_window.title("Challenges")
         challenge_window.geometry("400x400")
@@ -131,7 +139,9 @@ def main_window(user_data):
                 label.place(x=20, y=y_pos)
             y_pos += 60
 
+
     def open_goals():
+        """Öffnet das Ziel Fenster mit Notizfunktion"""
         goal_window = tk.Toplevel()
         goal_window.title("Ziele")
         goal_window.geometry("400x400")
@@ -140,8 +150,9 @@ def main_window(user_data):
         if "notes" not in user_data:
             user_data["notes"] = []
 
+
         def safe_note():
-            """Speichert eine neue Notiz mit Datum und aktualisiert die Anzeige."""
+            """Speichert eine neue Notiz mit Datum und aktualisiert die Anzeige"""
             note_text = free_text_entry.get().strip()
             if note_text:  # Falls das Feld nicht leer ist
                 today = datetime.now().strftime("%d.%m.%Y")  # Heutiges Datum als String
@@ -149,8 +160,9 @@ def main_window(user_data):
                 free_text_entry.delete(0, tk.END)  # Löscht das Eingabefeld nach dem Speichern
                 update_notes_display()  # Aktualisiert die Anzeige
 
+
         def update_notes_display():
-            """Aktualisiert die Anzeige der gespeicherten Notizen."""
+            """Aktualisiert die Anzeige der gespeicherten Notizen"""
             note_label.config(text="\n".join(user_data["notes"]))  # Notizen untereinander anzeigen
 
         goal_label = ttk.Label(goal_window, text=f"Dein Ziel: {user_data['goal']}!", font=("Helvetica", 16))
@@ -165,6 +177,7 @@ def main_window(user_data):
         note_label.place(x=20, y=110)
 
         update_notes_display()
+
 
     def update_timer():
         """Berechnet die Differenz zwischen dem Nüchternheitsdatum und jetzt und aktualisiert die Anzeige."""
@@ -202,18 +215,16 @@ def main_window(user_data):
 
 
 
-#hier beginnt UI
-
-
+# GUI
     window2 = tk.Tk()
     window2.title('Sobriety Tracker')
     window2.geometry('600x600')
     window2.configure()
     window2.resizable(False, False)
+
     # style
     style = ttk.Style()
     style.theme_use('alt')
-
 
     settings_button = ttk.Button(window2, text='Settings', command=open_settings) #Einstellungen
     settings_button.place(x=20, y=20)
@@ -221,15 +232,13 @@ def main_window(user_data):
     label = ttk.Label(window2, text=f"Hi, {user_data['name']}!", font=("Helvetica", 16, "bold")) #Begrüßung
     label.place(x=300, y=35, anchor="center")
 
-
     selected_quote = random.choice(quotes) #zufällige Motivationszitate aus Liste weiter oben
-
 
     quote_label = ttk.Label(window2, text=selected_quote, font=("Helvetica", 13, "italic"), #Zitate anzeigen u platzieren
                             foreground="SkyBlue1", background="white", wraplength=500, justify="center")
     quote_label.place(x=300, y=95, anchor="center")
 
-    #Timer GUI
+    # Timer GUI
     canvas = tk.Canvas(window2, width=400, height=400, highlightthickness=0)
     canvas.place(x=105, y=105)
 
