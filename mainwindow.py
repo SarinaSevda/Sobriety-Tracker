@@ -2,6 +2,7 @@ import tkinter as tk
 from datetime import datetime
 from tkinter import ttk
 import webbrowser
+import random
 
 
 def main_window(user_data):
@@ -188,6 +189,22 @@ def main_window(user_data):
 
         window2.after(1000, update_timer)
 
+
+    # Liste Motivations-Zitate
+    quotes = [
+        "Ein Tag nach dem anderen.",
+        "Du bist stärker als du denkst.",
+        "Heute zählt. Bleib dran!",
+        "Stolz beginnt mit einem Schritt.",
+        "Kleine Schritte – große Wirkung.",
+        "Heute wird ein guter Tag!"
+    ]
+
+
+
+#hier beginnt UI
+
+
     window2 = tk.Tk()
     window2.title('Sobriety Tracker')
     window2.geometry('600x600')
@@ -198,14 +215,23 @@ def main_window(user_data):
     style.theme_use('alt')
 
 
-    settings_button = ttk.Button(window2, text='Settings', command=open_settings)
+    settings_button = ttk.Button(window2, text='Settings', command=open_settings) #Einstellungen
     settings_button.place(x=20, y=20)
 
-    label = ttk.Label(window2, text=f"Willkommen beim Sobriety Tracker, {user_data['name']}!", font=("Helvetica", 16))
-    label.pack(pady=20)
+    label = ttk.Label(window2, text=f"Hi, {user_data['name']}!", font=("Helvetica", 16, "bold")) #Begrüßung
+    label.place(x=300, y=35, anchor="center")
 
+
+    selected_quote = random.choice(quotes) #zufällige Motivationszitate aus Liste weiter oben
+
+
+    quote_label = ttk.Label(window2, text=selected_quote, font=("Helvetica", 13, "italic"), #Zitate anzeigen u platzieren
+                            foreground="SkyBlue1", background="white", wraplength=500, justify="center")
+    quote_label.place(x=300, y=95, anchor="center")
+
+    #Timer GUI
     canvas = tk.Canvas(window2, width=400, height=400, highlightthickness=0)
-    canvas.pack()
+    canvas.place(x=105, y=105)
 
     canvas.create_oval(50, 50, 350, 350, outline="grey", width=3)
 
