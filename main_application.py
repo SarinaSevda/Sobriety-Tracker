@@ -35,7 +35,8 @@ class MainApplication:
         self.user_data = user_data
 
         # Style anwenden
-        apply_theme(ttk.Style(), self.user_data.get("dark_mode", False), self.root)
+        self.dark_mode = False
+        apply_theme(ttk.Style(), self.dark_mode, self.root)
 
         # Haupt-Frame anlegen
         self.main_frame = ttk.Frame(self.root)
@@ -77,10 +78,18 @@ class MainApplication:
         challenge_button = ttk.Button(self.main_frame, text="Meine Erfolge", command=self.open_challenge)
         challenge_button.place(x=250, y=550)
 
+        #Hilfe-Button
+        help_button = ttk.Button(self.main_frame, text='Hilfe', command=self.open_help)
+        help_button.place(x=20, y=550)
+
+        #Ziele-u-Reflektion-Button
+        goalrefl_button = ttk.Button(self.main_frame, text="Ziele", command=self.open_goalrefl)
+        goalrefl_button.place(x=500, y=550)
+
         #zufällige Zitatauswahl
         selected_quote = random.choice(QUOTES_OPTIONS)
         self.quote_label.config(text=selected_quote)
-        self.quote_label.place(x=300, y=95, anchor="center")
+        self.quote_label.place(x=300, y=90, anchor="center")
 
 
     #Einstellungen mit Theme-Anpassung
@@ -92,16 +101,15 @@ class MainApplication:
         settings_window.title("Einstellungen")
         settings_window.geometry("300x150")
 
-        is_dark_mode = tk.BooleanVar(value=self.user_data.get("dark_mode", False))
+        is_dark_mode = tk.BooleanVar(value=self.dark_mode)
 
         def toggle_theme():
-            dark = is_dark_mode.get()
-            self.user_data["dark_mode"] = dark
-            apply_theme(ttk.Style(), dark, self.root)  # Theme anwenden
+            self.dark_mode = is_dark_mode.get()
+            self.apply_theme_to_app(self.dark_mode)  # Theme anwenden
 
         dark_mode_check = ttk.Checkbutton(
             settings_window,
-            text="Dark Mode aktivieren",
+            text="Dark-Mode aktivieren",
             variable=is_dark_mode,
             command=toggle_theme
         )
@@ -134,7 +142,7 @@ class MainApplication:
                    style=HELP_LABEL_STYLE["bold"], pady=(15, 5))
         help_label(help_frame, "Ärztlicher Bereitschaftsdienst: 116 117",
                    style=HELP_LABEL_STYLE["normal"])
-        help_label(help_frame, "TelefonSeelsorge: 116 123 oder 0800 1110111 / 0800 1110222",
+        help_label(help_frame, "Telefonseelsorge: 116 123 oder 0800 1110111 / 0800 1110222",
                    style=HELP_LABEL_STYLE["normal"])
         help_label(help_frame, "Sucht & Drogenhotline: 01806 313031",
                    style=HELP_LABEL_STYLE["normal"])
@@ -145,27 +153,22 @@ class MainApplication:
         help_label(help_frame, "Telefonberatung zur Rauchentwöhnung: 0800 8 31 31 31",
                    style=HELP_LABEL_STYLE["normal"])
 
-        help_label(help_frame, "Weitere Hilfeseiten:", **HELP_LABEL_STYLE["bold"], pady=(15, 5))
-
-        help_button_frame = tk.Frame(help_frame)
-        help_button_frame.pack(anchor='w', fill='x')
+        help_label(help_frame, "Weitere Hilfeseiten:", style= HELP_LABEL_STYLE["bold"], pady=(15, 5))
 
         websites = [
-            ("Der Beauftragte der Bundesregierung für Sucht- und Drogenfragen",
-             "https://www.bundesdrogenbeauftragter.de/service/beratungsangebote/"),
-            ("Deutsches Rotes Kreuz Suchtberatung:",
-             "https://www.drk.de/hilfe-in-deutschland/gesundheit-und-praevention/suchtberatung/"),
-            ("DHS Deutsche Hauptstelle für Suchtfragen e.V.", "https://www.dhs.de/")
+            ("Bundesdrogenbeauftragter", "https://www.bundesdrogenbeauftragter.de/service/beratungsangebote/"),
+            ("DRK Suchtberatung", "https://www.drk.de/hilfe-in-deutschland/gesundheit-und-praevention/suchtberatung/"),
+            ("DHS Hauptstelle für Suchtfragen", "https://www.dhs.de/")
         ]
 
-        max_width = 60
-
+        # Links anzeigen
         for text, url in websites:
-            btn = ttk.Button(help_button_frame, text=text, anchor='w', width=max_width,
-                            command=lambda link=url: webbrowser.open(link))
-            btn.pack(anchor='w', pady=5)
+            link = tk.Label(help_frame, text=text, fg="blue", cursor="hand2", underline=True)
+            link.pack(anchor="w", pady=2)
+            link.bind("<Button-1>", lambda e, link_url=url: webbrowser.open(link_url))
 
-        apply_theme(ttk.Style(), self.user_data.get("dark_mode", False), self.help_window)
+
+        apply_theme(ttk.Style(), self.dark_mode, self.help_window)
 
 
     def open_challenge(self):
@@ -205,7 +208,7 @@ class MainApplication:
                 label.place(x=20, y=y_pos)
             y_pos += 60
 
-        apply_theme(ttk.Style(), self.user_data.get("dark_mode", False), challenge_window)
+        apply_theme(ttk.Style(), self.dark_mode, challenge_window)
 
     #Ziele und Reflektion
     def open_goalrefl(self):
@@ -213,7 +216,7 @@ class MainApplication:
         self.goalrefl_window.title("Ziele und Reflektion")
         self.goalrefl_window.geometry("400x400")
 
-        apply_theme(ttk.Style(), self.user_data.get("dark_mode", False), self.goalrefl_window)
+        apply_theme(ttk.Style(), self.dark_mode, self.goalrefl_window)
 
         # Ziel anzeigen
         goalrefl_text = f"Dein Ziel: {self.user_data.get('goal')}!"
@@ -249,12 +252,12 @@ class MainApplication:
         if note_text:
             today = datetime.now().strftime("%d.%m.%Y")
             full_note = f"{today}: {note_text}"
-            self.user_data["notes"].insert(0, full_note)
+            self.user_data.note.insert(0, full_note)
             self.free_text_entry.delete(0, tk.END)
             self.update_notes_display()
 
     def update_notes_display(self):
-        notes = self.user_data.get("notes", [])
+        notes = self.user_data.note
         self.note_text_widget.config(state="normal")
         self.note_text_widget.delete("1.0", tk.END)
         self.note_text_widget.insert(tk.END, "\n\n".join(notes))
