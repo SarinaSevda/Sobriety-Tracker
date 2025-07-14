@@ -82,8 +82,8 @@ class MainApplication:
         help_button.place(x=20, y=550)
 
         #Ziele-u-Reflektion-Button
-        goalrefl_button = ttk.Button(self.main_frame, text="Ziele", command=self.open_goalrefl)
-        goalrefl_button.place(x=500, y=550)
+        goalrefl_button = ttk.Button(self.main_frame, text="Ziele & Reflektion", command=self.open_goalrefl)
+        goalrefl_button.place(x=480, y=550)
 
         #zufällige Zitatauswahl
         selected_quote = random.choice(QUOTES_OPTIONS)
