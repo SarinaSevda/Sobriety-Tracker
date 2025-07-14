@@ -11,7 +11,7 @@ from main_application import MainApplication
 
 # Optionen für Süchte
 ADDICTION_OPTIONS = [
-"Alkoholsucht",
+    "Alkoholsucht",
     "Nikotinsucht",
     "Koffeinsucht",
     "Drogensucht",
@@ -40,11 +40,9 @@ class Gui_Wizard:   #******NEU*******
         self.user_data = UserData()
         self.additional_addictions = []
 
-        # Style anwenden
-        #configure_styles()
 
-        # Schritt-Tracking
-        self.current_step = 1
+        # Style anwenden
+        configure_styles()
 
 
 
@@ -53,7 +51,7 @@ class Gui_Wizard:   #******NEU*******
         self.welcome_label = ttk.Label(root, text="", **NAME_LABEL_STYLE) #Allgemeines Willkommen
 
         #Schritt 1: Name
-        self.name_label = ttk.Label(root, text="Wie ist dein Name?", **NAME_LABEL_STYLE)
+        self.name_label = ttk.Label(root, text="Wie ist dein Name?", **NAME_LABEL_STYLE) ###**warum hier root und unten self.root?
         self.name_button = ttk.Button(root, text="Weiter", command=self.submit_name)
         self.name_entry = ttk.Entry(root)
 
@@ -114,8 +112,8 @@ class Gui_Wizard:   #******NEU*******
         self.back_button_4 = ttk.Button(self.root, text="Zurück", command=self.ask_goal)
 
         # Schritt 5: Abschluss
-        self.final_welcome_label = ttk.Label(self.root, text="** Willkommen auf deiner Sobriety-Reise **",
-                                             **FINAL_LABEL_STYLE)
+        self.final_welcome_label = ttk.Label(self.root, text="Willkommen auf deiner Sobriety-Reise",
+                                             **WELCOME_LABEL_STYLE)
         self.final_welcome_text = ttk.Label(self.root,
                                             text="Fertig! Sehen wir uns jetzt deinen Tracker an.\nHier kannst du deine nüchternen Tage verfolgen und deine Erfolge feiern!",
                                             **FINAL_LABEL_STYLE)
@@ -139,13 +137,17 @@ class Gui_Wizard:   #******NEU*******
         new_root.mainloop()
 
     def ask_name(self):
+
         self.clear_screen()
         self.welcome_label.config(text="Willkommen!")
         self.welcome_label.pack(pady=50)
 
         self.name_label.pack()
-        self.name_entry.pack()
+        self.name_entry.pack(pady=10)
+        self.name_entry.focus()  # Cursor landet hiermit direkt im Eingabefeld
+
         self.name_button.pack()
+
 
 
     def submit_name(self):
@@ -158,6 +160,7 @@ class Gui_Wizard:   #******NEU*******
             messagebox.showwarning("Warnung", "Bitte gib deinen Namen ein.")
 
     def ask_addiction(self):
+
         self.clear_screen()
         self.welcome_label.config(text=f"Willkommen, {self.user_data.name}!\nBitte wähle deine Süchte aus.", wraplength=500,
         justify="center")
@@ -173,6 +176,7 @@ class Gui_Wizard:   #******NEU*******
 
         self.addiction_button.pack(pady=10)
         self.back_button_2.pack(pady=5)
+
 
     def open_new_addiction_choice(self):
         new_var = tk.StringVar(self.root, value=ADDICTION_OPTIONS[0])
@@ -197,14 +201,17 @@ class Gui_Wizard:   #******NEU*******
 
 
     def ask_goal(self):
+
         self.clear_screen()
         self.welcome_label.config(text="Super!")
         self.welcome_label.pack(pady=50)
 
-        self.goal_label.pack()
-        self.goal_dropdown.pack()
-        self.goal_button.pack(padx=10)
-        self.back_button_3.pack(padx=5)
+        self.goal_label.pack(padx=5)
+        self.goal_dropdown.pack(padx=10)
+        self.goal_button.pack(pady=10)
+        self.back_button_3.pack(pady=5)
+
+
 
 
     def submit_goal(self):
@@ -217,17 +224,20 @@ class Gui_Wizard:   #******NEU*******
 
 
     def ask_sobriety(self):
+
         self.clear_screen()
-        self.sobriety_label.pack()
+        self.sobriety_label.pack(pady=50)
 
         self.sobriety_date.pack(pady=5)
 
-        self.sobriety_time_label.pack()
+        self.sobriety_time_label.pack(pady=60)
         self.sobriety_hour_dropdown.pack(padx=5)
         self.sobriety_minute_dropdown.pack(padx=5)
 
         self.sobriety_button.pack(pady=10)
         self.back_button_4.pack(pady=5)
+
+
 
     def submit_sobriety_duration(self):
         self.user_data.sobriety_date = self.sobriety_date.get()
@@ -237,19 +247,9 @@ class Gui_Wizard:   #******NEU*******
 
     def show_final_screen(self):
         self.clear_screen()
-        self.final_welcome_label.pack(pady=30)
+        self.final_welcome_label.pack(pady=50)
         self.final_welcome_text.pack(pady=10)
         self.final_welcome_button.pack(pady=30)
 
-    def handle_enter(self):
-    # Reagiere auch auf Enter statt weiter
-        if self.current_step == 1:
-            self.submit_name()
-        elif self.current_step == 2:
-            self.submit_addiction()
-        elif self.current_step == 3:
-            self.submit_goal()
-        elif self.current_step == 4:
-            self.submit_sobriety_duration()
 
 

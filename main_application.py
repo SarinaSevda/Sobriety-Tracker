@@ -217,6 +217,7 @@ class MainApplication:
 
         apply_theme(ttk.Style(), self.dark_mode, self.goalrefl_window)
 
+
         #Ziel anzeigen
         goalrefl_text = f"Dein Ziel: {self.user_data.get('goal')}!"
         goalrefl_label = ttk.Label(self.goalrefl_window, text=goalrefl_text, **REFLECTION_LABEL_STYLE)
@@ -238,6 +239,11 @@ class MainApplication:
 
         self.note_text_widget = tk.Text(note_frame, wrap="word", height=10, **NOTE_TEXT_STYLE)
         self.note_text_widget.pack(side="left", fill="both", expand=True)
+
+        if self.dark_mode:
+            self.note_text_widget.config(bg="#444444", fg="white", insertbackground="white")
+        else:
+            self.note_text_widget.config(bg="white", fg="black", insertbackground="black")
 
         scrollbar = ttk.Scrollbar(note_frame, command=self.note_text_widget.yview)
         scrollbar.pack(side="right", fill="y")
