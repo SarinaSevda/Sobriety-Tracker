@@ -2,7 +2,7 @@ import sqlite3
 import os
 from user_model import UserData
 
-DB_PATH = "user_data.db"
+DB_PATH = "userdata.db"
 
 def user_exists(): #prüft, ob Nutzderdaten vorhanden
     if not os.path.exists(DB_PATH):
