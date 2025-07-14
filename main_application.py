@@ -276,7 +276,10 @@ class MainApplication:
             self.canvas.create_text(235, 195, text="00", **TIMER_TEXT_STYLE),
             self.canvas.create_text(295, 195, text="00", **TIMER_TEXT_STYLE)
         ]
-
+        labels = ["Tage", "Stunden", "Minuten", "Sekunden"]
+        label_positions = [(115, 230), (175, 230), (235, 230), (295, 230)]
+        for (x, y), text in zip(label_positions, labels):
+            self.canvas.create_text(x, y, text=text, **DATENTIME_LABEL_STYLE)
 
         self.progress_arc = self.canvas.create_arc(
             50, 50, 350, 350,

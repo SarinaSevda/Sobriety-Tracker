@@ -78,6 +78,12 @@ TIMER_TEXT_STYLE = {
 }
 
 
+DATENTIME_LABEL_STYLE = {
+    "font": ("Helvetica", 10),
+    "fill": "gray"
+}
+
+
 CHALLENGE_LABEL_UNLOCKED = {
     "font": ("Helvetica", 12, "bold"),
     "foreground": "green",
