@@ -62,7 +62,6 @@ class MainApplication:
         self.update_timer()
 
 
-
     def build_main_interface(self):
         self.main_frame.pack(fill="both", expand=True)
 
