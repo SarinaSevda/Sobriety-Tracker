@@ -28,7 +28,7 @@ if __name__ == "__main__":
     root.geometry("600x600")
     root.resizable(False, False)
 
-    #configure_styles()
+    configure_styles()
 
     '''if user_exists(): #prüft & lädt eventuell vorhandene Nutzerdaten aus DB -> direkt zur Hauptanwendung
         user_data_dict = load_user_data()
@@ -40,6 +40,5 @@ if __name__ == "__main__":
     user_data = UserData()
     app = Gui_Wizard(root, user_data)
 
-    root.bind("<Return>", return_key) #globale Bindung Enter-Taste
 
     root.mainloop()
