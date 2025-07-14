@@ -86,10 +86,11 @@ class UserData:
         }
 
     def load_from_dict(self, data):
-        self.name = data.get ("name", "")
-        self.addictions = data.get ("addictions", "[]")
-        self.goal = data.get ("goal", "")
-        self.sobriety_date = data.get ("sobriety_date", "None")
-        self.sobriety_time = data.get ("sobriety_time", "00:00")
-        self.note = data.get ("note", "[]")
+        self.name = data.get("name", "")
+        self.addictions = data.get("addictions", [])  # als Liste
+        self.goal = data.get("goal", "")
+        self.sobriety_date = data.get("sobriety_date", None)
+        self.sobriety_time = data.get("sobriety_time", "00:00")
+        self.note = data.get("note", [])
+
 
