@@ -217,7 +217,7 @@ class MainApplication:
 
         apply_theme(ttk.Style(), self.dark_mode, self.goalrefl_window)
 
-        # Ziel anzeigen
+        #Ziel anzeigen
         goalrefl_text = f"Dein Ziel: {self.user_data.get('goal')}!"
         goalrefl_label = ttk.Label(self.goalrefl_window, text=goalrefl_text, **REFLECTION_LABEL_STYLE)
         goalrefl_label.pack(pady=(10, 5))
