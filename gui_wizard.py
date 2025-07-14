@@ -131,6 +131,7 @@ class Gui_Wizard:   #******NEU*******
             widget.pack_forget()
 
     def open_main_window(self):
+        self.user_data.save_to_db() #Nutzerdaten speichern
         self.root.destroy()  # GUI-Fenster schließen
         new_root = tk.Tk()
         MainApplication(new_root, self.user_data)

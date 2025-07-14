@@ -30,15 +30,15 @@ if __name__ == "__main__":
 
     configure_styles()
 
-    '''if user_exists(): #prüft & lädt eventuell vorhandene Nutzerdaten aus DB -> direkt zur Hauptanwendung
+    if user_exists(): #prüft & lädt eventuell vorhandene Nutzerdaten aus DB -> direkt zur Hauptanwendung
         user_data_dict = load_user_data()
         user_data = UserData()
         user_data.load_from_dict(user_data_dict)
         app = MainApplication(root, user_data)
 
-    else: #kein Nutzer vorhanden -> startet GUI zur Erfassung '''
-    user_data = UserData()
-    app = Gui_Wizard(root, user_data)
+    else: #kein Nutzer vorhanden -> startet GUI zur Erfassung
+        user_data = UserData()
+        app = Gui_Wizard(root, user_data)
 
 
     root.mainloop()
