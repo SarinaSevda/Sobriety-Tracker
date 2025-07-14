@@ -23,6 +23,13 @@ class MainApplication:
         self.root = root
         self.root.title("Dein Sobriety Tracker")
         self.root.geometry("600x600")
+        self.root.update_idletasks()
+        w = self.root.winfo_screenwidth()
+        h = self.root.winfo_screenheight()
+        size = tuple(int(_) for _ in self.root.geometry().split("+")[0].split("x"))
+        x = w // 2 - size[0] // 2
+        y = h // 2 - size[1] // 2
+        self.root.geometry(f"{size[0]}x{size[1]}+{x}+{y}")
         self.root.resizable(False, False)
 
         self.user_data = user_data
@@ -56,7 +63,6 @@ class MainApplication:
 
 
     def build_main_interface(self):
-        self.main_frame = ttk.Frame(self.root)
         self.main_frame.pack(fill="both", expand=True)
 
         #Buttons
