@@ -3,6 +3,7 @@
 import sqlite3
 import os
 
+
 class UserData:
     def __init__(self):
         self.name = ""
@@ -23,7 +24,6 @@ class UserData:
     def get(self, key, default=None):
         return getattr(self, key, default)
 
-
     def _create_table_if_not_exists(self):
         with sqlite3.connect(self.db_path) as conn:
             c = conn.cursor()
@@ -41,6 +41,8 @@ class UserData:
                           sobriety_date
                           TEXT,
                           sobriety_time
+                          TEXT,
+                          note
                           TEXT
                       )
                       ''')
@@ -50,30 +52,31 @@ class UserData:
         with sqlite3.connect(self.db_path) as conn:
             c = conn.cursor()
             c.execute('''
-                INSERT OR REPLACE INTO users (name, addictions, goal, sobriety_date, sobriety_time)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT OR REPLACE INTO users (name, addictions, goal, sobriety_date, sobriety_time, note)
+                VALUES (?, ?, ?, ?, ?,?)
             ''', (
                 self.name,
                 ",".join(self.addictions),  # Liste wird zu CSV-String
                 self.goal,
                 self.sobriety_date,
-                self.sobriety_time
+                self.sobriety_time,
+                ",".join(self.note) if isinstance(self.note, list) else self.note
+
             ))
             conn.commit()
 
     def load_from_db(self):
         with sqlite3.connect(self.db_path) as conn:
             c = conn.cursor()
-            c.execute('SELECT addictions, goal, sobriety_date, sobriety_time FROM users WHERE name=?', (self.name,))
+            c.execute(
+                'SELECT addictions, goal, sobriety_date, sobriety_time, note FROM users WHERE name=?', (self.name,))
             row = c.fetchone()
             if row:
                 self.addictions = row[0].split(",") if row[0] else []
                 self.goal = row[1]
                 self.sobriety_date = row[2]
                 self.sobriety_time = row[3]
-
-
-
+                self.note = row[4].split(",") if row[4] else []
 
     def to_dict(self):
         return {
@@ -92,5 +95,3 @@ class UserData:
         self.sobriety_date = data.get("sobriety_date", None)
         self.sobriety_time = data.get("sobriety_time", "00:00")
         self.note = data.get("note", [])
-
-
