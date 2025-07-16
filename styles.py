@@ -1,13 +1,12 @@
 
-# styles.py
+# styles.py -- zentrales Stylesheet, auf das die anderen Skripte Zugriff haben: Abruf von Formatierung
 
 import tkinter as tk
 from tkinter import ttk
 
+
 def configure_styles():
     style = ttk.Style()
-
-
 
 
 WELCOME_LABEL_STYLE = {
@@ -37,6 +36,7 @@ GOAL_LABEL_STYLE = {
     "justify": "center",
 }
 
+
 def set_dropdown_font(dropdown, font=("Helvetica", 13)):
     dropdown["menu"].config(font=font)
 
@@ -63,7 +63,7 @@ QUOTE_LABEL_STYLE = {
     "justify": "center",
 }
 
-#Timer-GUI
+# Timer-GUI
 
 TIMER_OVAL_STYLE = {
     "outline": "grey",
@@ -131,6 +131,7 @@ def help_label(master, text, style, pady=2):
     label.pack(anchor='w', pady=pady, fill='x')
     return label
 
+
 HELP_LABEL_STYLE = {
     "normal": {
         "font": ("Helvetica", 12),
@@ -146,6 +147,7 @@ HELP_LABEL_STYLE = {
     },
 }
 
+
 def apply_theme(style: ttk.Style, dark_mode: bool, window=None):
     """
     Wendet entweder den Dark Mode oder das helle Standard-Theme an.
@@ -154,8 +156,10 @@ def apply_theme(style: ttk.Style, dark_mode: bool, window=None):
         style.configure(".", background="#2e2e2e", foreground="white")
         style.configure("TLabel", background="#2e2e2e", foreground="white")
         style.configure("TButton", background="#444444", foreground="black")
-        style.configure("TCheckbutton", background="#2e2e2e", foreground="white")
-        style.configure("TEntry", fieldbackground="#444444", foreground="white")
+        style.configure("TCheckbutton", background="#2e2e2e",
+                        foreground="white")
+        style.configure("TEntry", fieldbackground="#444444",
+                        foreground="white")
     else:
         style.configure(".", background="white", foreground="black")
         style.configure("TLabel", background="white", foreground="black")
